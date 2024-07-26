@@ -1,0 +1,13 @@
+h6{
+    color: red;
+    font-size: 100px;
+    font-weight: bold;
+    text-align: center
+}
+
+body{
+    background-color: #000000;
+    background-image: url(https://www.icegif.com/wp-content/uploads/2022/01/icegif-962.gif);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
