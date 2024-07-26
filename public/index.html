@@ -1,12 +1,35 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>Quiz Bandeiras</title>
 </head>
+
 <body>
-    <h6></h6>
+    <div id="menu">
+        <h1>Jogo de Quiz de Bandeiras</h1>
+        <button onclick="iniciarJogo('normal', 'sobrevivencia')">Modo Sobrevivência (Normal)</button>
+        <button onclick="iniciarJogo('contorno', 'sobrevivencia')">Modo Sobrevivência (Contorno)</button>
+        <button onclick="iniciarJogo('normal', 'aprender')">Modo Aprender (Normal)</button>
+        <button onclick="iniciarJogo('contorno', 'aprender')">Modo Aprender (Contorno)</button>
+    </div>
+
+    <div id="jogo" class="escondido">
+        <h2 id="pontuacao">Pontuação: 0</h2>
+        <div id="container-bandeira"></div>
+        <div id="container-opcoes"></div>
+    </div>
+
+    <div id="fim-de-jogo" class="escondido">
+        <h2>Fim de Jogo!</h2>
+        <button onclick="tentarNovamente()">Tentar Novamente</button>
+        <button onclick="retornarAoMenu()">Retornar ao Menu</button>
+    </div>
+
+    <script src="script.js"></script>
 </body>
+
 </html>

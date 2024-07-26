@@ -1,13 +1,34 @@
-h6{
-    color: red;
-    font-size: 100px;
-    font-weight: bold;
-    text-align: center
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 20px;
 }
 
-body{
-    background-color: #000000;
-    background-image: url(https://www.icegif.com/wp-content/uploads/2022/01/icegif-962.gif);
-    background-repeat: no-repeat;
-    background-size: cover;
+.escondido {
+    display: none;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#container-bandeira {
+    margin: 20px;
+}
+
+#container-opcoes {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+#container-opcoes button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
 }
