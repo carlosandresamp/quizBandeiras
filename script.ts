@@ -67,7 +67,7 @@ class JogoDeBandeiras {
             this.paisAtual = this.paises[Math.floor(Math.random() * this.paises.length)];
             perguntasRestantes.push(...this.paisAtual.perguntas);
         }
-        
+
         this.perguntaAtual = perguntasRestantes[Math.floor(Math.random() * perguntasRestantes.length)];
 
         const containerOpcoes = document.getElementById('container-opcoes')!; // Obtém o container das opções
@@ -85,9 +85,10 @@ class JogoDeBandeiras {
             this.pontuacao++; // Incrementa a pontuação se a resposta estiver correta
             document.getElementById('pontuacao')!.innerText = `Pontuação: ${this.pontuacao}`; // Atualiza a pontuação exibida
 
-            // Exibe a bandeira após a resposta correta
+            // Exibe a bandeira e a mensagem após a resposta correta
             const containerBandeira = document.getElementById('container-bandeira')!;
-            containerBandeira.innerHTML = `<img src="${this.paisAtual!.urlBandeira}" alt="Bandeira" class="bandeira">`;
+            containerBandeira.innerHTML = `<h2>${this.paisAtual!.nome}, você acertou!</h2>
+                                       <img src="${this.paisAtual!.urlBandeira}" alt="Bandeira" class="bandeira">`;
             containerBandeira.classList.remove('escondido');
 
             // Carrega uma nova pergunta após a resposta correta no modo sobrevivência
