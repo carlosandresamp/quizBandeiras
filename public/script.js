@@ -2,50 +2,74 @@
 // Classe que gerencia o jogo de bandeiras
 class JogoDeBandeiras {
     constructor(paises) {
+        this.paisAtual = null; // País atual em jogo
+        this.perguntaAtual = null; // Pergunta atual
         this.paises = paises; // Inicializa a lista de países
         this.pontuacao = 0; // Inicializa a pontuação em 0
-        this.modoJogo = 'normal'; // Define o modo de jogo padrão
         this.modoJogar = 'sobrevivencia'; // Define o modo de jogar padrão
+        this.configurarBotaoSom(); // Configura o botão de som
     }
     // Método para iniciar o jogo com os modos especificados
-    iniciarJogo(modo, jogar) {
+    iniciarJogo(jogar) {
         this.pontuacao = 0; // Reseta a pontuação
-        this.modoJogo = modo; // Define o modo de jogo
         this.modoJogar = jogar; // Define o modo de jogar
         document.getElementById('menu').classList.add('escondido'); // Esconde o menu principal
         document.getElementById('jogo').classList.remove('escondido'); // Mostra a tela de jogo
         document.getElementById('pontuacao').innerText = `Pontuação: ${this.pontuacao}`; // Atualiza a pontuação exibida
-        this.carregarNovaBandeira(); // Carrega uma nova bandeira para o jogador adivinhar
+        this.carregarNovaPergunta(); // Carrega uma nova pergunta
     }
-    // Método privado para carregar uma nova bandeira
-    carregarNovaBandeira() {
-        const paisAleatorio = this.paises[Math.floor(Math.random() * this.paises.length)]; // Seleciona um país aleatório
-        const containerBandeira = document.getElementById('container-bandeira'); // Obtém o container da bandeira
-        const containerOpcoes = document.getElementById('container-opcoes'); // Obtém o container das opções
-        containerBandeira.innerHTML = `<img src="${this.modoJogo === 'normal' ? paisAleatorio.urlBandeira : paisAleatorio.urlContorno}" alt="Bandeira">`; // Define a imagem da bandeira
-        const opcoes = [paisAleatorio.nome]; // Inicializa as opções com o nome do país correto
-        while (opcoes.length < 3) {
-            const opcaoAleatoria = this.paises[Math.floor(Math.random() * this.paises.length)].nome; // Seleciona um nome de país aleatório
-            if (!opcoes.includes(opcaoAleatoria)) {
-                opcoes.push(opcaoAleatoria); // Adiciona a opção aleatória se ainda não estiver na lista
-            }
+    // Método privado para carregar uma nova pergunta
+    carregarNovaPergunta() {
+        // Esconde a bandeira e limpa o container da bandeira
+        const containerBandeira = document.getElementById('container-bandeira');
+        containerBandeira.classList.add('escondido');
+        containerBandeira.innerHTML = '';
+        // Esconde a pergunta anterior
+        const containerPergunta = document.getElementById('container-pergunta');
+        containerPergunta.innerHTML = '';
+        // Seleciona um país aleatório
+        this.paisAtual = this.paises[Math.floor(Math.random() * this.paises.length)];
+        if (this.paisAtual.perguntas.length === 0) {
+            this.carregarNovaPergunta(); // Garante que sempre haja perguntas
+            return;
         }
+        // Seleciona uma pergunta aleatória que não seja a mesma da pergunta atual
+        const perguntasRestantes = this.paisAtual.perguntas.filter(p => p !== this.perguntaAtual);
+        if (perguntasRestantes.length === 0) {
+            // Se não houver perguntas restantes, recarrega perguntas do país
+            this.paisAtual = this.paises[Math.floor(Math.random() * this.paises.length)];
+            perguntasRestantes.push(...this.paisAtual.perguntas);
+        }
+        this.perguntaAtual = perguntasRestantes[Math.floor(Math.random() * perguntasRestantes.length)];
+        const containerOpcoes = document.getElementById('container-opcoes'); // Obtém o container das opções
+        containerPergunta.innerHTML = `<h3>${this.perguntaAtual.texto}</h3>`; // Exibe a pergunta
+        const opcoes = this.perguntaAtual.opcoes; // Inicializa as opções com as respostas da pergunta
         this.embaralharArray(opcoes); // Embaralha as opções
-        containerOpcoes.innerHTML = opcoes.map(opcao => `<button onclick="jogo.verificarResposta('${opcao}', '${paisAleatorio.nome}')">${opcao}</button>`).join(''); // Cria os botões de opções
+        containerOpcoes.innerHTML = opcoes.map(opcao => `<button onclick="jogo.verificarResposta('${opcao}')">${opcao}</button>`).join(''); // Cria os botões de opções
     }
     // Método para verificar a resposta do jogador
-    verificarResposta(selecionado, correto) {
-        if (selecionado === correto) {
+    verificarResposta(selecionado) {
+        if (selecionado === this.perguntaAtual.resposta) {
             this.pontuacao++; // Incrementa a pontuação se a resposta estiver correta
             document.getElementById('pontuacao').innerText = `Pontuação: ${this.pontuacao}`; // Atualiza a pontuação exibida
-            this.carregarNovaBandeira(); // Carrega uma nova bandeira
+            // Exibe a bandeira após a resposta correta
+            const containerBandeira = document.getElementById('container-bandeira');
+            containerBandeira.innerHTML = `<img src="${this.paisAtual.urlBandeira}" alt="Bandeira" class="bandeira">`;
+            containerBandeira.classList.remove('escondido');
+            // Carrega uma nova pergunta após a resposta correta no modo sobrevivência
+            if (this.modoJogar === 'sobrevivencia') {
+                setTimeout(() => this.carregarNovaPergunta(), 2000); // Carrega uma nova pergunta após 2 segundos
+            }
+            else {
+                setTimeout(() => this.carregarNovaPergunta(), 2000); // Carrega uma nova pergunta após 2 segundos no modo aprender
+            }
         }
         else if (this.modoJogar === 'sobrevivencia') {
             document.getElementById('jogo').classList.add('escondido'); // Esconde a tela de jogo
             document.getElementById('fim-de-jogo').classList.remove('escondido'); // Mostra a tela de fim de jogo
         }
         else {
-            this.carregarNovaBandeira(); // Carrega uma nova bandeira se o modo for "aprender"
+            this.carregarNovaPergunta(); // Carrega uma nova pergunta se o modo for "aprender"
         }
     }
     // Método para tentar novamente no modo sobrevivência
@@ -54,7 +78,7 @@ class JogoDeBandeiras {
         document.getElementById('jogo').classList.remove('escondido'); // Mostra a tela de jogo
         this.pontuacao = 0; // Reseta a pontuação
         document.getElementById('pontuacao').innerText = `Pontuação: ${this.pontuacao}`; // Atualiza a pontuação exibida
-        this.carregarNovaBandeira(); // Carrega uma nova bandeira
+        this.carregarNovaPergunta(); // Carrega uma nova pergunta
     }
     // Método para retornar ao menu principal
     retornarAoMenu() {
@@ -68,35 +92,53 @@ class JogoDeBandeiras {
             [array[i], array[j]] = [array[j], array[i]]; // Troca os elementos de lugar
         }
     }
+    // Método para configurar o botão de som
+    configurarBotaoSom() {
+        const botaoSom = document.getElementById('toggle-som');
+        const musica = document.getElementById('musica');
+        let somAtivado = true;
+        botaoSom.addEventListener('click', () => {
+            if (somAtivado) {
+                musica.pause();
+                botaoSom.innerText = 'Ativar Som';
+            }
+            else {
+                musica.play();
+                botaoSom.innerText = 'Desativar Som';
+            }
+            somAtivado = !somAtivado;
+        });
+    }
 }
-// Lista de países com suas respectivas bandeiras e contornos (mapas do país)
+// Lista de países com suas respectivas bandeiras e perguntas
 const paises = [
-    { nome: "Brasil", urlBandeira: "https://upload.wikimedia.org/wikipedia/en/0/05/Flag_of_Brazil.svg", urlContorno: "https://upload.wikimedia.org/wikipedia/commons/3/3e/Bra-map.png" },
-    { nome: "Alemanha", urlBandeira: "https://upload.wikimedia.org/wikipedia/en/b/ba/Flag_of_Germany.svg", urlContorno: "https://upload.wikimedia.org/wikipedia/commons/b/ba/Germany_map.png" },
-    { nome: "Japão", urlBandeira: "https://upload.wikimedia.org/wikipedia/en/9/9e/Flag_of_Japan.svg", urlContorno: "https://upload.wikimedia.org/wikipedia/commons/9/9e/Japan_map.png" },
-    { nome: "Estados Unidos", urlBandeira: "https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg", urlContorno: "https://upload.wikimedia.org/wikipedia/commons/3/34/US_map.png" },
-    { nome: "França", urlBandeira: "https://upload.wikimedia.org/wikipedia/en/c/c3/Flag_of_France.svg", urlContorno: "https://upload.wikimedia.org/wikipedia/commons/e/e4/France_map.png" },
-    { nome: "Reino Unido", urlBandeira: "https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg", urlContorno: "https://upload.wikimedia.org/wikipedia/commons/b/bc/UK_map.png" },
-    { nome: "Itália", urlBandeira: "https://upload.wikimedia.org/wikipedia/en/0/03/Flag_of_Italy.svg", urlContorno: "https://upload.wikimedia.org/wikipedia/commons/1/1b/Italy_map.png" },
-    { nome: "Canadá", urlBandeira: "https://upload.wikimedia.org/wikipedia/en/c/cf/Flag_of_Canada.svg", urlContorno: "https://upload.wikimedia.org/wikipedia/commons/d/d3/Canada_map.png" },
-    { nome: "China", urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_the_People%27s_Republic_of_China.svg", urlContorno: "https://upload.wikimedia.org/wikipedia/commons/1/12/China_map.png" },
-    { nome: "Rússia", urlBandeira: "https://upload.wikimedia.org/wikipedia/en/f/f3/Flag_of_Russia.svg", urlContorno: "https://upload.wikimedia.org/wikipedia/commons/5/5b/Russia_map.png" },
-    { nome: "Índia", urlBandeira: "https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg", urlContorno: "https://upload.wikimedia.org/wikipedia/commons/6/62/India_map.png" },
-    { nome: "México", urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/f/fc/Flag_of_Mexico.svg", urlContorno: "https://upload.wikimedia.org/wikipedia/commons/8/8f/Mexico_map.png" },
-    { nome: "Austrália", urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/b/b9/Flag_of_Australia.svg", urlContorno: "https://upload.wikimedia.org/wikipedia/commons/2/24/Australia_map.png" },
-    { nome: "Espanha", urlBandeira: "https://upload.wikimedia.org/wikipedia/en/9/9a/Flag_of_Spain.svg", urlContorno: "https://upload.wikimedia.org/wikipedia/commons/0/01/Spain_map.png" },
-    { nome: "Argentina", urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg", urlContorno: "https://upload.wikimedia.org/wikipedia/commons/2/29/Argentina_map.png" },
-    { nome: "Portugal", urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/5/5c/Flag_of_Portugal.svg", urlContorno: "https://upload.wikimedia.org/wikipedia/commons/f/f1/Portugal_map.png" },
-    { nome: "África do Sul", urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/a/af/Flag_of_South_Africa.svg", urlContorno: "https://upload.wikimedia.org/wikipedia/commons/c/c9/South_Africa_map.png" },
-    { nome: "Egito", urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/f/fe/Flag_of_Egypt.svg", urlContorno: "https://upload.wikimedia.org/wikipedia/commons/1/1d/Egypt_map.png" },
-    { nome: "Nigéria", urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/7/79/Flag_of_Nigeria.svg", urlContorno: "https://upload.wikimedia.org/wikipedia/commons/3/36/Nigeria_map.png" },
-    { nome: "Coreia do Sul", urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg", urlContorno: "https://upload.wikimedia.org/wikipedia/commons/2/29/South_Korea_map.png" },
-    { nome: "Arábia Saudita", urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/0/0d/Flag_of_Saudi_Arabia.svg", urlContorno: "https://upload.wikimedia.org/wikipedia/commons/0/09/Saudi_Arabia_map.png" },
-    // Adicionar mais países conforme necessário
+    {
+        nome: "Brasil",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/en/0/05/Flag_of_Brazil.svg",
+        perguntas: [
+            {
+                texto: "É o país do futebol...",
+                resposta: "Brasil",
+                opcoes: ["Venezuela", "Acre", "Brasil", "México"]
+            }
+        ]
+    },
+    {
+        nome: "Argentina",
+        urlBandeira: "https://bandeira.net/wp-content/uploads/2018/08/bandeira-da-argentina-300x187.png",
+        perguntas: [
+            {
+                texto: "São os maiores rivais do Brasil no futebol...",
+                resposta: "Argentina",
+                opcoes: ["Alemanha", "Angola", "Venezuela", "Argentina"]
+            }
+        ]
+    }
+    // Adicione mais países com suas perguntas conforme necessário
 ];
 // Cria uma instância do jogo de bandeiras
 const jogo = new JogoDeBandeiras(paises);
 // Exponha os métodos no objeto global para que possam ser chamados a partir do HTML
-window.iniciarJogo = (modo, jogar) => jogo.iniciarJogo(modo, jogar);
+window.iniciarJogo = (jogar) => jogo.iniciarJogo(jogar);
 window.tentarNovamente = () => jogo.tentarNovamente();
 window.retornarAoMenu = () => jogo.retornarAoMenu();

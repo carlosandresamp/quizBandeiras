@@ -1,9 +1,16 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    background-color: #f0f0f0;
+    background-color: rgb(179, 179, 179);
     margin: 0;
     padding: 20px;
+    background-image: url(''); /* Substitua 'sua-imagem-de-fundo.jpg' pelo caminho da sua imagem */
+    background-size: cover;
+    background-position: center;
+}
+
+h1 {
+    color: white;
 }
 
 .escondido {
@@ -12,9 +19,21 @@ body {
 
 button {
     padding: 10px 20px;
-    margin: 10px;
+    margin: 10px 0; /* Margem vertical para botões alinhados verticalmente */
     font-size: 16px;
     cursor: pointer;
+    border-radius: 5mm;
+    background-color: red;
+    color: white;
+    display: block;
+    border: none;
+    transition: background-color 0.3s, transform 0.3s;
+    
+}
+
+button:hover {
+    background-color: darkred;
+    transform: scale(1.05);
 }
 
 #container-bandeira {
@@ -23,12 +42,30 @@ button {
 
 #container-opcoes {
     display: flex;
-    justify-content: center;
+    flex-direction: column; /* Coloca os botões um abaixo do outro */
+    align-items: center;
     gap: 10px;
 }
 
 #container-opcoes button {
+    width: 20%;
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
+}
+
+#container-pergunta h3 {
+    color: white;
+}
+
+.bandeira {
+    width: 400px; /* Ajuste o tamanho da bandeira conforme necessário */
+    height: auto;
+    border-radius: 5mm;
+}
+
+#toggle-som {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
 }
