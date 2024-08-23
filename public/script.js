@@ -59,10 +59,10 @@ class JogoDeBandeiras {
             containerBandeira.classList.remove('escondido');
             // Carrega uma nova pergunta após a resposta correta no modo sobrevivência
             if (this.modoJogar === 'sobrevivencia') {
-                setTimeout(() => this.carregarNovaPergunta(), 2000); // Carrega uma nova pergunta após 2 segundos
+                setTimeout(() => this.carregarNovaPergunta(), 3000); // Carrega uma nova pergunta após 3 segundos
             }
             else {
-                setTimeout(() => this.carregarNovaPergunta(), 2000); // Carrega uma nova pergunta após 2 segundos no modo aprender
+                setTimeout(() => this.carregarNovaPergunta(), 3000); // Carrega uma nova pergunta após 3 segundos no modo aprender
             }
         }
         else if (this.modoJogar === 'sobrevivencia') {
@@ -134,7 +134,95 @@ const paises = [
                 opcoes: ["Alemanha", "Angola", "Venezuela", "Argentina"]
             }
         ]
-    }
+    },
+    {
+        nome: "Nepal",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/9/9b/Flag_of_Nepal.svg",
+        perguntas: [
+            {
+                texto: "País onde está localizado o Monte Evereste",
+                resposta: "Nepal",
+                opcoes: ["Nepal", "Índia", "Austrália", "Canadá"]
+            }
+        ]
+    },
+    {
+        nome: "Rússia",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/f/f3/Flag_of_Russia.svg",
+        perguntas: [
+            {
+                texto: "Maior país do mundo",
+                resposta: "Rússia",
+                opcoes: ["Rússia", "Estados Unidos", "China", "Alemanha"]
+            }
+        ]
+    },
+    {
+        nome: "Vaticano",
+        urlBandeira: "https://m.media-amazon.com/images/I/615kv83+IFL._AC_SY300_SX300_.jpg",
+        perguntas: [
+            {
+                texto: "Menor país do mundo",
+                resposta: "Vaticano",
+                opcoes: ["Costa Rica", "Luxemburgo", "Mônaco", "Vaticano"]
+            }
+        ]
+    },
+    {
+        nome: "Índia",
+        urlBandeira: "https://www.bandeirasnacionais.com/data/flags/w580/in.webp",
+        perguntas: [
+            {
+                texto: "País mais populoso do mundo",
+                resposta: "Índia",
+                opcoes: ["Índia", "China", "Estados Unidos", "Rússia"]
+            }
+        ]
+    },
+    {
+        nome: "Chile",
+        urlBandeira: "https://bandeira.net/wp-content/uploads/2018/08/bandeira-do-chile-300x200.png",
+        perguntas: [
+            {
+                texto: "País da america do sul que não faz fronteira com o Brasil",
+                resposta: "Chile",
+                opcoes: ["Chile", "Argentina", "Colômbia", "Uruguai"]
+            }
+        ]
+    },
+    {
+        nome: "Canadá",
+        urlBandeira: "https://bandeira.net/wp-content/uploads/2018/09/bandeira-do-canada-300x150.png",
+        perguntas: [
+            {
+                texto: "País com maior extensão litorânea do mundo",
+                resposta: "Canadá",
+                opcoes: ["Brasil", "Austrália", "México", "Canadá"]
+            }
+        ]
+    },
+    {
+        nome: "França",
+        urlBandeira: "https://todabandeira.com.br/wp-content/uploads/2023/08/bandeira-da-franca.jpg",
+        perguntas: [
+            {
+                texto: "País onde nasceu Napoleão Bonaparte",
+                resposta: "França",
+                opcoes: ["França", "Itália", "Inglaterra", "Espanha"]
+            }
+        ]
+    },
+    {
+        nome: "Inglaterra",
+        urlBandeira: "https://pt.wikipedia.org/wiki/Bandeira_da_Inglaterra#/media/Ficheiro:Flag_of_England.svg",
+        perguntas: [
+            {
+                texto: "País de onde surgiu o futebol",
+                resposta: "Inglaterra",
+                opcoes: ["Brasil", "Estados Unidos", "França", "Inglaterra"]
+            }
+        ]
+    },
     // Adicione mais países com suas perguntas conforme necessário
 ];
 // Cria uma instância do jogo de bandeiras
