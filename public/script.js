@@ -21,11 +21,11 @@ class JogoDeBandeiras {
     // Método privado para carregar uma nova pergunta
     carregarNovaPergunta() {
         // Esconde a bandeira e limpa o container da bandeira
-        const containerBandeira = document.getElementById('container-bandeira');
+        let containerBandeira = document.getElementById('container-bandeira');
         containerBandeira.classList.add('escondido');
         containerBandeira.innerHTML = '';
         // Esconde a pergunta anterior
-        const containerPergunta = document.getElementById('container-pergunta');
+        let containerPergunta = document.getElementById('container-pergunta');
         containerPergunta.innerHTML = '';
         // Seleciona um país aleatório
         this.paisAtual = this.paises[Math.floor(Math.random() * this.paises.length)];
@@ -34,16 +34,16 @@ class JogoDeBandeiras {
             return;
         }
         // Seleciona uma pergunta aleatória que não seja a mesma da pergunta atual
-        const perguntasRestantes = this.paisAtual.perguntas.filter(p => p !== this.perguntaAtual);
+        let perguntasRestantes = this.paisAtual.perguntas.filter(p => p !== this.perguntaAtual);
         if (perguntasRestantes.length === 0) {
             // Se não houver perguntas restantes, recarrega perguntas do país
             this.paisAtual = this.paises[Math.floor(Math.random() * this.paises.length)];
             perguntasRestantes.push(...this.paisAtual.perguntas);
         }
         this.perguntaAtual = perguntasRestantes[Math.floor(Math.random() * perguntasRestantes.length)];
-        const containerOpcoes = document.getElementById('container-opcoes'); // Obtém o container das opções
+        let containerOpcoes = document.getElementById('container-opcoes'); // Obtém o container das opções
         containerPergunta.innerHTML = `<h3>${this.perguntaAtual.texto}</h3>`; // Exibe a pergunta
-        const opcoes = this.perguntaAtual.opcoes; // Inicializa as opções com as respostas da pergunta
+        let opcoes = this.perguntaAtual.opcoes; // Inicializa as opções com as respostas da pergunta
         this.embaralharArray(opcoes); // Embaralha as opções
         containerOpcoes.innerHTML = opcoes.map(opcao => `<button onclick="jogo.verificarResposta('${opcao}')">${opcao}</button>`).join(''); // Cria os botões de opções
     }
@@ -53,7 +53,7 @@ class JogoDeBandeiras {
             this.pontuacao++; // Incrementa a pontuação se a resposta estiver correta
             document.getElementById('pontuacao').innerText = `Pontuação: ${this.pontuacao}`; // Atualiza a pontuação exibida
             // Exibe a bandeira e a mensagem após a resposta correta
-            const containerBandeira = document.getElementById('container-bandeira');
+            let containerBandeira = document.getElementById('container-bandeira');
             containerBandeira.innerHTML = `<h2>${this.paisAtual.nome}, você acertou!</h2>
                                        <img src="${this.paisAtual.urlBandeira}" alt="Bandeira" class="bandeira">`;
             containerBandeira.classList.remove('escondido');
@@ -89,14 +89,14 @@ class JogoDeBandeiras {
     // Método privado para embaralhar um array (utilizado para embaralhar as opções)
     embaralharArray(array) {
         for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
+            let j = Math.floor(Math.random() * (i + 1));
             [array[i], array[j]] = [array[j], array[i]]; // Troca os elementos de lugar
         }
     }
     // Método para configurar o botão de som
     configurarBotaoSom() {
-        const botaoSom = document.getElementById('toggle-som');
-        const musica = document.getElementById('musica');
+        let botaoSom = document.getElementById('toggle-som');
+        let musica = document.getElementById('musica');
         let somAtivado = true;
         botaoSom.addEventListener('click', () => {
             if (somAtivado) {
@@ -112,7 +112,7 @@ class JogoDeBandeiras {
     }
 }
 // Lista de países com suas respectivas bandeiras e perguntas
-const paises = [
+let paises = [
     {
         nome: "Brasil",
         urlBandeira: "https://upload.wikimedia.org/wikipedia/en/0/05/Flag_of_Brazil.svg",
@@ -226,7 +226,7 @@ const paises = [
     // Adicione mais países com suas perguntas conforme necessário
 ];
 // Cria uma instância do jogo de bandeiras
-const jogo = new JogoDeBandeiras(paises);
+let jogo = new JogoDeBandeiras(paises);
 // Exponha os métodos no objeto global para que possam ser chamados a partir do HTML
 window.iniciarJogo = (jogar) => jogo.iniciarJogo(jogar);
 window.tentarNovamente = () => jogo.tentarNovamente();
