@@ -1,130 +1,145 @@
-// Define os tipos para os modos de jogo e modos de jogar
-type ModoJogo = 'normal'; // Remover o modo 'contorno'
-type ModoJogar = 'sobrevivencia' | 'aprender';
-
-// Define a interface para um país, incluindo o nome e URLs para as bandeiras
+// Define uma interface para representar um país, incluindo nome, URL da bandeira e perguntas
 interface Pais {
     nome: string;
     urlBandeira: string;
-    perguntas: Pergunta[]; // Adiciona um array de perguntas
+    perguntas: Pergunta[];
 }
 
-// Define a interface para uma pergunta
+// Define uma interface para representar uma pergunta, incluindo texto, resposta correta e opções
 interface Pergunta {
     texto: string;
-    resposta: string; // Resposta correta da pergunta
-    opcoes: string[]; // Opções de resposta
+    resposta: string;
+    opcoes: string[];
 }
 
-// Classe que gerencia o jogo de bandeiras
+// Classe principal que gerencia o jogo de bandeiras
 class JogoDeBandeiras {
-    private paises: Pais[]; // Lista de países disponíveis no jogo
-    private pontuacao: number; // Pontuação do jogador
-    private modoJogar: ModoJogar; // Modo de jogar atual (sobrevivência ou aprender)
-    private paisAtual: Pais | null = null; // País atual em jogo
-    private perguntaAtual: Pergunta | null = null; // Pergunta atual
+    private paises: Pais[];
+    private pontuacao: number;
+    private modoJogar: 'sobrevivencia' | 'aprender';
+    private perguntasFeitas: Set<string>; // Armazena as perguntas já feitas
+    private paisAtual: Pais | null = null;
+    private perguntaAtual: Pergunta | null = null;
 
+    // Construtor da classe que inicializa as propriedades
     constructor(paises: Pais[]) {
-        this.paises = paises; // Inicializa a lista de países
-        this.pontuacao = 0; // Inicializa a pontuação em 0
-        this.modoJogar = 'sobrevivencia'; // Define o modo de jogar padrão
-        this.configurarBotaoSom(); // Configura o botão de som
+        this.paises = paises;
+        this.pontuacao = 0;
+        this.modoJogar = 'sobrevivencia';
+        this.perguntasFeitas = new Set();
+        this.configurarBotaoSom();
     }
 
-    // Método para iniciar o jogo com os modos especificados
-    iniciarJogo(jogar: ModoJogar) {
-        this.pontuacao = 0; // Reseta a pontuação
-        this.modoJogar = jogar; // Define o modo de jogar
-        document.getElementById('menu')!.classList.add('escondido'); // Esconde o menu principal
-        document.getElementById('jogo')!.classList.remove('escondido'); // Mostra a tela de jogo
-        document.getElementById('pontuacao')!.innerText = `Pontuação: ${this.pontuacao}`; // Atualiza a pontuação exibida
-        this.carregarNovaPergunta(); // Carrega uma nova pergunta
+    // Método para iniciar o jogo em um modo específico
+    iniciarJogo(jogar: 'sobrevivencia' | 'aprender') {
+        this.pontuacao = 0;
+        this.modoJogar = jogar;
+        this.perguntasFeitas.clear(); // Limpa as perguntas feitas ao iniciar um novo jogo
+        document.getElementById('menu')!.classList.add('escondido');
+        document.getElementById('jogo')!.classList.remove('escondido');
+        document.getElementById('pontuacao')!.innerText = `Pontuação: ${this.pontuacao}`;
+        this.carregarNovaPergunta();
     }
 
     // Método privado para carregar uma nova pergunta
     private carregarNovaPergunta() {
-        // Esconde a bandeira e limpa o container da bandeira
-        let containerBandeira = document.getElementById('container-bandeira')!;
-        containerBandeira.classList.add('escondido');
-        containerBandeira.innerHTML = '';
+        let containerBandeira = document.getElementById('container-bandeira');
+        if (containerBandeira) {
+            containerBandeira.classList.add('escondido');
+            containerBandeira.innerHTML = '';
+        }
 
-        // Esconde a pergunta anterior
-        let containerPergunta = document.getElementById('container-pergunta')!;
-        containerPergunta.innerHTML = '';
+        let containerPergunta = document.getElementById('container-pergunta');
+        if (containerPergunta) {
+            containerPergunta.innerHTML = '';
+        }
 
-        // Seleciona um país aleatório
-        this.paisAtual = this.paises[Math.floor(Math.random() * this.paises.length)];
+        // Combinação de todas as perguntas dos países
+        let todasPerguntas = ([] as Pergunta[]).concat(...this.paises.map(pais => pais.perguntas));
 
-        if (this.paisAtual.perguntas.length === 0) {
-            this.carregarNovaPergunta(); // Garante que sempre haja perguntas
+        // Filtra as perguntas que ainda não foram feitas
+        let perguntasRestantes = todasPerguntas.filter(pergunta => !this.perguntasFeitas.has(pergunta.texto));
+
+        if (perguntasRestantes.length === 0) {
+            this.exibirFimDeJogo(); // Se não houver mais perguntas, exibe o fim de jogo
             return;
         }
 
-        // Seleciona uma pergunta aleatória que não seja a mesma da pergunta atual
-        let perguntasRestantes = this.paisAtual.perguntas.filter(p => p !== this.perguntaAtual);
-        if (perguntasRestantes.length === 0) {
-            // Se não houver perguntas restantes, recarrega perguntas do país
-            this.paisAtual = this.paises[Math.floor(Math.random() * this.paises.length)];
-            perguntasRestantes.push(...this.paisAtual.perguntas);
-        }
-
+        // Seleciona uma nova pergunta aleatória
         this.perguntaAtual = perguntasRestantes[Math.floor(Math.random() * perguntasRestantes.length)];
+        this.perguntasFeitas.add(this.perguntaAtual.texto); // Marca a pergunta como feita
 
-        let containerOpcoes = document.getElementById('container-opcoes')!; // Obtém o container das opções
+        // Encontra o país atual com base na pergunta selecionada
+        this.paisAtual = this.paises.find(pais => pais.perguntas.includes(this.perguntaAtual!)) || null;
 
-        containerPergunta.innerHTML = `<h3>${this.perguntaAtual.texto}</h3>`; // Exibe a pergunta
+        let containerOpcoes = document.getElementById('container-opcoes');
+        if (containerOpcoes && containerPergunta) {
+            containerPergunta.innerHTML = `<h3>${this.perguntaAtual!.texto}</h3>`;
 
-        let opcoes = this.perguntaAtual.opcoes; // Inicializa as opções com as respostas da pergunta
-        this.embaralharArray(opcoes); // Embaralha as opções
-        containerOpcoes.innerHTML = opcoes.map(opcao => `<button onclick="jogo.verificarResposta('${opcao}')">${opcao}</button>`).join(''); // Cria os botões de opções
+            // Embaralha as opções de resposta
+            let opcoes = this.perguntaAtual!.opcoes.slice();
+            this.embaralharArray(opcoes);
+            containerOpcoes.innerHTML = opcoes.map(opcao => `<button onclick="jogo.verificarResposta('${opcao}')">${opcao}</button>`).join('');
+        }
     }
 
-    // Método para verificar a resposta do jogador
+    // Método para verificar a resposta escolhida pelo jogador
     verificarResposta(selecionado: string) {
         if (selecionado === this.perguntaAtual!.resposta) {
-            this.pontuacao++; // Incrementa a pontuação se a resposta estiver correta
-            document.getElementById('pontuacao')!.innerText = `Pontuação: ${this.pontuacao}`; // Atualiza a pontuação exibida
+            this.pontuacao++;
+            document.getElementById('pontuacao')!.innerText = `Pontuação: ${this.pontuacao}`;
 
-            // Exibe a bandeira e a mensagem após a resposta correta
-            let containerBandeira = document.getElementById('container-bandeira')!;
-            containerBandeira.innerHTML = `<h2>${this.paisAtual!.nome}, você acertou!</h2>
-                                       <img src="${this.paisAtual!.urlBandeira}" alt="Bandeira" class="bandeira">`;
-            containerBandeira.classList.remove('escondido');
-
-            // Carrega uma nova pergunta após a resposta correta no modo sobrevivência
-            if (this.modoJogar === 'sobrevivencia') {
-                setTimeout(() => this.carregarNovaPergunta(), 3000); // Carrega uma nova pergunta após 3 segundos
-            } else {
-                setTimeout(() => this.carregarNovaPergunta(), 3000); // Carrega uma nova pergunta após 3 segundos no modo aprender
+            let containerBandeira = document.getElementById('container-bandeira');
+            if (containerBandeira) {
+                containerBandeira.innerHTML = `<h2>${this.paisAtual!.nome}, você acertou!</h2>
+                                        <img src="${this.paisAtual!.urlBandeira}" alt="Bandeira" class="bandeira">`;
+                containerBandeira.classList.remove('escondido');
             }
+
+            setTimeout(() => this.carregarNovaPergunta(), 3000);
         } else if (this.modoJogar === 'sobrevivencia') {
-            document.getElementById('jogo')!.classList.add('escondido'); // Esconde a tela de jogo
-            document.getElementById('fim-de-jogo')!.classList.remove('escondido'); // Mostra a tela de fim de jogo
+            this.exibirFimDeJogo();
         } else {
-            this.carregarNovaPergunta(); // Carrega uma nova pergunta se o modo for "aprender"
+            this.carregarNovaPergunta();
+        }
+    }
+
+    // Método para exibir a tela de fim de jogo
+    private exibirFimDeJogo() {
+        document.getElementById('jogo')!.classList.add('escondido');
+        let fimDeJogoContainer = document.getElementById('fim-de-jogo');
+        if (fimDeJogoContainer) {
+            fimDeJogoContainer.classList.remove('escondido');
         }
     }
 
     // Método para tentar novamente no modo sobrevivência
     tentarNovamente() {
-        document.getElementById('fim-de-jogo')!.classList.add('escondido'); // Esconde a tela de fim de jogo
-        document.getElementById('jogo')!.classList.remove('escondido'); // Mostra a tela de jogo
-        this.pontuacao = 0; // Reseta a pontuação
-        document.getElementById('pontuacao')!.innerText = `Pontuação: ${this.pontuacao}`; // Atualiza a pontuação exibida
-        this.carregarNovaPergunta(); // Carrega uma nova pergunta
+        let fimDeJogoContainer = document.getElementById('fim-de-jogo');
+        if (fimDeJogoContainer) {
+            fimDeJogoContainer.classList.add('escondido');
+        }
+        document.getElementById('jogo')!.classList.remove('escondido');
+        this.pontuacao = 0;
+        document.getElementById('pontuacao')!.innerText = `Pontuação: ${this.pontuacao}`;
+        this.perguntasFeitas.clear();
+        this.carregarNovaPergunta();
     }
 
     // Método para retornar ao menu principal
     retornarAoMenu() {
-        document.getElementById('fim-de-jogo')!.classList.add('escondido'); // Esconde a tela de fim de jogo
-        document.getElementById('menu')!.classList.remove('escondido'); // Mostra o menu principal
+        let fimDeJogoContainer = document.getElementById('fim-de-jogo');
+        if (fimDeJogoContainer) {
+            fimDeJogoContainer.classList.add('escondido');
+        }
+        document.getElementById('menu')!.classList.remove('escondido');
     }
 
     // Método privado para embaralhar um array (utilizado para embaralhar as opções)
     private embaralharArray(array: any[]) {
         for (let i = array.length - 1; i > 0; i--) {
             let j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]]; // Troca os elementos de lugar
+            [array[i], array[j]] = [array[j], array[i]];
         }
     }
 
@@ -162,7 +177,7 @@ let paises: Pais[] = [
     },
     {
         nome: "Argentina",
-        urlBandeira: "https://bandeira.net/wp-content/uploads/2018/08/bandeira-da-argentina-300x187.png",
+        urlBandeira: "https://static.mundoeducacao.uol.com.br/mundoeducacao/2023/01/bandeira-da-argentina.jpg",
         perguntas: [
             {
                 texto: "São os maiores rivais do Brasil no futebol...",
@@ -172,107 +187,277 @@ let paises: Pais[] = [
         ]
     },
     {
+        nome: "Estados Unidos",
+        urlBandeira: "https://static.mundoeducacao.uol.com.br/mundoeducacao/2022/05/bandeira-estados-unidos.jpg",
+        perguntas: [
+            {
+                "texto": "Qual país tem a maior economia do mundo e sua capital é Washington, D.C.?",
+                "resposta": "Estados Unidos",
+                "opcoes": ["Estados Unidos", "Canadá", "México", "Brasil"]
+            }
+        ]
+    },
+    {
+        nome: "Argentina",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg",
+        perguntas: [
+            {
+                "texto": "Qual país é conhecido por seu tango e por sua capital, Buenos Aires?",
+                "resposta": "Argentina",
+                "opcoes": ["Brasil", "Uruguai", "Argentina", "Chile"]
+            }
+        ]
+    },
+    {
+        nome: "Canadá",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/en/c/cf/Flag_of_Canada.png",
+        perguntas: [
+            {
+                "texto": "Qual país é o segundo maior do mundo em área territorial?",
+                "resposta": "Canadá",
+                "opcoes": ["Rússia", "Canadá", "China", "Estados Unidos"]
+            }
+        ]
+    },
+    {
+        nome: "Austrália",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/b/b9/Flag_of_Australia.svg",
+        perguntas: [
+            {
+                "texto": "Qual país é conhecido por seus cangurus e a Grande Barreira de Corais?",
+                "resposta": "Austrália",
+                "opcoes": ["Austrália", "Japão", "Nova Zelândia", "Indonésia"]
+            }
+        ]
+    },
+    {
+        nome: "Alemanha",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/en/b/ba/Flag_of_Germany.svg",
+        perguntas: [
+            {
+                "texto": "Qual país é conhecido por sua cerveja e Oktoberfest?",
+                "resposta": "Alemanha",
+                "opcoes": ["Alemanha", "Áustria", "Suíça", "França"]
+            }
+        ]
+    },
+    {
+        nome: "França",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/en/c/c3/Flag_of_France.svg",
+        perguntas: [
+            {
+                "texto": "Qual país é famoso pela Torre Eiffel e pela cidade de Paris?",
+                "resposta": "França",
+                "opcoes": ["França", "Espanha", "Alemanha", "Itália"]
+            }
+        ]
+    },
+    {
+        nome: "Reino Unido",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/8/83/Flag_of_the_United_Kingdom_%283-5%29.svg",
+        perguntas: [
+            {
+                "texto": "Qual país é famoso por sua monarquia e o Big Ben?",
+                "resposta": "Reino Unido",
+                "opcoes": ["Grã-Bretanha", "Alemanha", "Reino Unido", "Espanha"]
+            }
+        ]
+    },
+    {
+        nome: "Egito",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/f/fe/Flag_of_Egypt.svg",
+        perguntas: [
+            {
+                "texto": "Qual país é conhecido pelas Pirâmides de Gizé e o rio Nilo?",
+                "resposta": "Egito",
+                "opcoes": ["Turquia", "Egito", "Arábia Saudita", "Marrocos"]
+            }
+        ]
+    },
+    {
+        nome: "Grécia",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/5/5c/Flag_of_Greece.svg",
+        perguntas: [
+            {
+                "texto": "Qual país é conhecido como o berço da democracia e dos Jogos Olímpicos?",
+                "resposta": "Grécia",
+                "opcoes": ["Grécia", "Itália", "Egito", "Turquia"]
+            }
+        ]
+    },
+    {
+        nome: "Japão",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/en/9/9e/Flag_of_Japan.svg",
+        perguntas: [
+            {
+                "texto": "Qual país é conhecido por sua cultura samurai e a cidade de Tóquio?",
+                "resposta": "Japão",
+                "opcoes": ["Japão", "China", "Coreia do Sul", "Taiwan"]
+            }
+        ]
+    },
+    {
+        nome: "México",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/f/fc/Flag_of_Mexico.svg",
+        perguntas: [
+            {
+                "texto": "Qual país é conhecido por sua culinária picante e as ruínas maias?",
+                "resposta": "México",
+                "opcoes": ["México", "Brasil", "Argentina", "Peru"]
+            }
+        ]
+    },
+    {
+        nome: "Rússia",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/en/f/f3/Flag_of_Russia.svg",
+        perguntas: [
+            {
+                "texto": "Qual país é o maior do mundo em área territorial?",
+                "resposta": "Rússia",
+                "opcoes": ["Brasil", "Estados Unidos", "Rússia", "China"]
+            }
+        ]
+    },
+    {
+        nome: "China",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/0/0f/Flag_of_China.svg",
+        perguntas: [
+            {
+                "texto": "Qual país é conhecido pela Muralha da China e pela Cidade Proibida?",
+                "resposta": "China",
+                "opcoes": ["China", "Mongólia", "Coreia do Sul", "Japão"]
+            }
+        ]
+    },
+    {
+        nome: "Índia",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg",
+        perguntas: [
+            {
+                "texto": "Qual país é conhecido pelo Taj Mahal e por ser o segundo mais populoso do mundo?",
+                "resposta": "Índia",
+                "opcoes": ["Índia", "Nepal", "China", "Paquistão"]
+            }
+        ]
+    },
+    {
+        nome: "África do Sul",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/a/af/Flag_of_South_Africa.svg",
+        perguntas: [
+            {
+                "texto": "Qual país é conhecido por sua diversidade cultural e por Nelson Mandela?",
+                "resposta": "África do Sul",
+                "opcoes": ["Egito", "Nigéria", "África do Sul", "Quênia"]
+            }
+        ]
+    },
+    {
+        nome: "Arábia Saudita",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/0/0d/Flag_of_Saudi_Arabia.svg",
+        perguntas: [
+            {
+                "texto": "Qual país é conhecido por suas cidades sagradas de Meca e Medina?",
+                "resposta": "Arábia Saudita",
+                "opcoes": ["Arábia Saudita", "Egito", "Iraque", "Irã"]
+            }
+        ]
+    },
+    {
+        nome: "Espanha",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/en/9/9a/Flag_of_Spain.svg",
+        perguntas: [
+            {
+                "texto": "Qual país é famoso por suas touradas e pela cidade de Barcelona?",
+                "resposta": "Espanha",
+                "opcoes": ["Espanha", "Grécia", "França", "Itália"]
+            }
+        ]
+    },
+    {
+        nome: "Itália",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/en/0/03/Flag_of_Italy.svg",
+        perguntas: [
+            {
+                "texto": "Qual país é conhecido por suas pizzas e pela cidade de Roma?",
+                "resposta": "Itália",
+                "opcoes": ["França", "Portugal", "Itália", "Espanha"]
+            }
+        ]
+    },
+    {
+        nome: "Suécia",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/en/4/4c/Flag_of_Sweden.svg",
+        perguntas: [
+            {
+                "texto": "Qual país é conhecido por sua política de bem-estar social e pelo Nobel de Literatura?",
+                "resposta": "Suécia",
+                "opcoes": ["Noruega", "Suécia", "Dinamarca", "Países Baixos"]
+            }
+        ]
+    },
+    {
+        nome: "Dinamarca",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/9/9c/Flag_of_Denmark.svg",
+        perguntas: [
+            {
+                "texto": "Qual país é conhecido por suas pequenas ilhas e pelo conto de fadas de Hans Christian Andersen?",
+                "resposta": "Dinamarca",
+                "opcoes": ["Noruega", "Dinamarca", "Alemanha", "Suécia"]
+            }
+        ]
+    },
+    {
+        nome: "Noruega",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/d/d9/Flag_of_Norway.svg",
+        perguntas: [
+            {
+                "texto": "Qual país é famoso por seus fiordes e pelo prêmio Nobel da Paz?",
+                "resposta": "Noruega",
+                "opcoes": ["Noruega", "Dinamarca", "Islândia", "Suécia"]
+            }
+        ]
+    },
+    {
         nome: "Nepal",
-    urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/9/9b/Flag_of_Nepal.svg",
-    perguntas: [
-        {
-            texto: "País onde está localizado o Monte Evereste",
-            resposta: "Nepal",
-            opcoes: ["Nepal", "Índia", "Austrália", "Canadá"]
-        }
-    ]
-},
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/9/9b/Flag_of_Nepal.svg",
+        perguntas: [
+            {
+                "texto": "Qual país é famoso pelo Monte Everest e por ser o berço do Buda?",
+                "resposta": "Nepal",
+                "opcoes": ["Butão", "Nepal", "Tibete", "Paquistão"]
+            }
+        ]
+    },
+    {
+        nome: "Brasil",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/en/0/05/Flag_of_Brazil.svg",
+        perguntas: [
+            {
+                "texto": "Qual país é conhecido pelo Carnaval e pelo Cristo Redentor?",
+                "resposta": "Brasil",
+                "opcoes": ["Argentina", "Brasil", "México", "Colômbia"]
+            }
+        ]
+    },
+    {
+        nome: "Argentina",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg",
+        perguntas: [
+            {
+                "texto": "Qual país é conhecido pelo tango e pela cidade de Buenos Aires?",
+                "resposta": "Argentina",
+                "opcoes": ["Uruguai", "Argentina", "Chile", "Paraguai"]
+            }
+        ]
+    }
 
-{
-    nome: "Rússia",
-    urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/f/f3/Flag_of_Russia.svg",
-    perguntas: [
-        {
-            texto: "Maior país do mundo",
-            resposta: "Rússia",
-            opcoes: ["Rússia", "Estados Unidos", "China", "Alemanha"]
-        }
-    ]
-},
-
-{
-    nome: "Vaticano",
-    urlBandeira: "https://m.media-amazon.com/images/I/615kv83+IFL._AC_SY300_SX300_.jpg",
-    perguntas: [
-        {
-            texto: "Menor país do mundo",
-            resposta: "Vaticano",
-            opcoes: ["Costa Rica", "Luxemburgo", "Mônaco", "Vaticano"]
-        }
-    ]
-},
-
-{
-    nome: "Índia",
-    urlBandeira: "https://www.bandeirasnacionais.com/data/flags/w580/in.webp",
-    perguntas: [
-        {
-            texto: "País mais populoso do mundo",
-            resposta: "Índia",
-            opcoes: ["Índia", "China", "Estados Unidos", "Rússia"]
-        }
-    ]
-},
-
-{
-    nome: "Chile",
-    urlBandeira: "https://bandeira.net/wp-content/uploads/2018/08/bandeira-do-chile-300x200.png",
-    perguntas: [
-        {
-            texto: "País da america do sul que não faz fronteira com o Brasil",
-            resposta: "Chile",
-            opcoes: ["Chile", "Argentina", "Colômbia", "Uruguai"]
-        }
-    ]
-},
-
-{
-    nome: "Canadá",
-    urlBandeira: "https://bandeira.net/wp-content/uploads/2018/09/bandeira-do-canada-300x150.png",
-    perguntas: [
-        {
-            texto: "País com maior extensão litorânea do mundo",
-            resposta: "Canadá",
-            opcoes: ["Brasil", "Austrália", "México", "Canadá"]
-        }
-    ]
-},
-{
-    nome: "França",
-    urlBandeira: "https://todabandeira.com.br/wp-content/uploads/2023/08/bandeira-da-franca.jpg",
-    perguntas: [
-        {
-            texto: "País onde nasceu Napoleão Bonaparte",
-            resposta: "França",
-            opcoes: ["França", "Itália", "Inglaterra", "Espanha"]
-        }
-    ]
-},
-
-{
-    nome: "Inglaterra",
-    urlBandeira: "https://pt.wikipedia.org/wiki/Bandeira_da_Inglaterra#/media/Ficheiro:Flag_of_England.svg",
-    perguntas: [
-        {
-            texto: "País de onde surgiu o futebol",
-            resposta: "Inglaterra",
-            opcoes: ["Brasil", "Estados Unidos", "França", "Inglaterra"]
-        }
-    ]
-},
-
-    // Adicione mais países com suas perguntas conforme necessário
+     // ☝🏻 ACIMA TODAS AS PERGUNTAS ESTÃO COM AS IMAGENS DAS BANDEIRAS!!!
 ];
 
 // Cria uma instância do jogo de bandeiras
 let jogo = new JogoDeBandeiras(paises);
 
 // Exponha os métodos no objeto global para que possam ser chamados a partir do HTML
-(window as any).iniciarJogo = (jogar: ModoJogar) => jogo.iniciarJogo(jogar);
+(window as any).iniciarJogo = (jogar: 'sobrevivencia' | 'aprender') => jogo.iniciarJogo(jogar);
 (window as any).tentarNovamente = () => jogo.tentarNovamente();
 (window as any).retornarAoMenu = () => jogo.retornarAoMenu();

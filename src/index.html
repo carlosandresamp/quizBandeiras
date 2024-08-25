@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Quiz Bandeiras</title>
+</head>
+
+<body>
+    <!-- Container estilizado que envolve o conteúdo -->
+    <div class="container-estilizada">
+        <div id="menu">
+            <h1>Quiz de Bandeiras</h1>
+            <button onclick="iniciarJogo('sobrevivencia')">Modo Sobrevivência</button>
+            <button onclick="iniciarJogo('aprender')">Modo Aprender</button>
+        </div>
+
+        <div id="jogo" class="escondido">
+            <h2 id="pontuacao">Pontuação: 0</h2>
+            <div id="container-pergunta"></div>
+            <div id="container-opcoes"></div>
+            <div id="container-bandeira" class="escondido"></div> <!-- Esconde a bandeira até a resposta estar correta -->
+        </div>
+
+        <div id="fim-de-jogo" class="escondido">
+            <h2>Fim de jogo, acabaram as bandeiras!</h2>
+            <button onclick="tentarNovamente()">Jogar Novamente</button>
+            <button onclick="retornarAoMenu()">Retornar ao Menu</button>
+        </div>
+    </div>
+
+    <button id="toggle-som">🔈</button>
+
+    <audio id="musica" src="../src/img/UEFA Champions League Anthem.mp3" loop></audio> <!-- Substitua 'sua-musica.mp3' pelo caminho da sua música -->
+
+    <script src="script.js"></script>
+</body>
+
+</html>
