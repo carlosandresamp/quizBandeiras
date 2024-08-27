@@ -1,41 +1,65 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+<!-- Define o idioma da página como português do Brasil -->
 
 <head>
     <meta charset="UTF-8">
+    <!-- Define o conjunto de caracteres como UTF-8 para suportar caracteres especiais -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Garante que a página seja exibida corretamente em dispositivos móveis -->
     <link rel="stylesheet" href="style.css">
+    <!-- Vincula o arquivo CSS externo para estilização da página -->
     <title>Quiz Bandeiras</title>
+    <!-- Define o título da página que aparece na aba do navegador -->
 </head>
 
 <body>
-    <!-- Container estilizado que envolve o conteúdo -->
     <div class="container-estilizada">
+        <!-- Contêiner principal estilizado -->
+
         <div id="menu">
+            <!-- Div para o menu inicial do jogo -->
             <h1>Quiz de Bandeiras</h1>
+            <!-- Título principal do menu -->
             <button onclick="iniciarJogo('sobrevivencia')">Modo Sobrevivência</button>
+            <!-- Botão para iniciar o jogo no modo sobrevivência -->
             <button onclick="iniciarJogo('aprender')">Modo Aprender</button>
+            <!-- Botão para iniciar o jogo no modo aprender -->
         </div>
 
         <div id="jogo" class="escondido">
+            <!-- Div para a área do jogo, inicialmente escondida -->
             <h2 id="pontuacao">Pontuação: 0</h2>
+            <!-- Exibe a pontuação atual do jogador -->
             <div id="container-pergunta"></div>
+            <!-- Contêiner onde as perguntas do quiz serão exibidas -->
             <div id="container-opcoes"></div>
-            <div id="container-bandeira" class="escondido"></div> <!-- Esconde a bandeira até a resposta estar correta -->
+            <!-- Contêiner onde as opções de resposta serão exibidas -->
+            <div id="container-bandeira" class="escondido"></div>
+            <!-- Contêiner onde a imagem da bandeira será exibida, inicialmente escondido -->
         </div>
 
         <div id="fim-de-jogo" class="escondido">
-            <h2>Fim de jogo, acabaram as bandeiras!</h2>
+            <!-- Div para exibir o fim de jogo, inicialmente escondido -->
+            <h2 id="mensagem-fim"></h2>
+            <!-- Mensagem de fim de jogo que será exibida após o término do jogo -->
             <button onclick="tentarNovamente()">Jogar Novamente</button>
+            <!-- Botão para tentar jogar novamente -->
             <button onclick="retornarAoMenu()">Retornar ao Menu</button>
+            <!-- Botão para retornar ao menu principal -->
         </div>
     </div>
 
     <button id="toggle-som">🔈</button>
+    <!-- Botão para ativar/desativar o som do jogo -->
 
-    <audio id="musica" src="../src/img/UEFA Champions League Anthem.mp3" loop></audio> <!-- Substitua 'sua-musica.mp3' pelo caminho da sua música -->
+    <audio id="musica" src="../src/img/UEFA Champions League Anthem.mp3" loop></audio>
+    <!-- Áudio de fundo que toca continuamente (loop) durante o jogo -->
+    <audio id="som-acerto" src="../src/img/acerto.mp3"></audio>
+    <!-- Áudio que toca quando o jogador acerta uma resposta -->
 
     <script src="script.js"></script>
+    <!-- Vincula o arquivo JavaScript externo que contém a lógica do jogo -->
 </body>
 
 </html>

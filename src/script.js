@@ -1,112 +1,125 @@
 "use strict";
-// Classe principal que gerencia o jogo de bandeiras
+// Classe principal para o jogo de bandeiras
 class JogoDeBandeiras {
-    // Construtor da classe que inicializa as propriedades
+    // Construtor da classe
     constructor(paises) {
-        this.paisAtual = null;
-        this.perguntaAtual = null;
-        this.paises = paises;
-        this.pontuacao = 0;
-        this.modoJogar = 'sobrevivencia';
-        this.perguntasFeitas = new Set();
-        this.configurarBotaoSom();
+        this.paisAtual = null; // País atual para a pergunta
+        this.perguntaAtual = null; // Pergunta atual
+        this.paises = paises; // Inicializa a lista de países
+        this.pontuacao = 0; // Inicializa a pontuação
+        this.modoJogar = 'sobrevivencia'; // Define o modo de jogo padrão
+        this.perguntasFeitas = new Set(); // Inicializa o conjunto de perguntas feitas
+        this.configurarBotaoSom(); // Configura o botão de som
     }
     // Método para iniciar o jogo em um modo específico
     iniciarJogo(jogar) {
-        this.pontuacao = 0;
-        this.modoJogar = jogar;
-        this.perguntasFeitas.clear(); // Limpa as perguntas feitas ao iniciar um novo jogo
-        document.getElementById('menu').classList.add('escondido');
-        document.getElementById('jogo').classList.remove('escondido');
-        document.getElementById('pontuacao').innerText = `Pontuação: ${this.pontuacao}`;
-        this.carregarNovaPergunta();
+        this.pontuacao = 0; // Reinicia a pontuação
+        this.modoJogar = jogar; // Define o modo de jogo
+        this.perguntasFeitas.clear(); // Limpa as perguntas já feitas
+        document.getElementById('menu').classList.add('escondido'); // Esconde o menu
+        document.getElementById('jogo').classList.remove('escondido'); // Mostra o jogo
+        document.getElementById('pontuacao').innerText = `Pontuação: ${this.pontuacao}`; // Atualiza a pontuação na tela
+        this.carregarNovaPergunta(); // Carrega uma nova pergunta
     }
-    // Método privado para carregar uma nova pergunta
+    // Método para carregar uma nova pergunta
     carregarNovaPergunta() {
         let containerBandeira = document.getElementById('container-bandeira');
         if (containerBandeira) {
-            containerBandeira.classList.add('escondido');
-            containerBandeira.innerHTML = '';
+            containerBandeira.classList.add('escondido'); // Esconde o container da bandeira
+            containerBandeira.innerHTML = ''; // Limpa o conteúdo do container da bandeira
         }
         let containerPergunta = document.getElementById('container-pergunta');
         if (containerPergunta) {
-            containerPergunta.innerHTML = '';
+            containerPergunta.innerHTML = ''; // Limpa o conteúdo do container da pergunta
         }
-        // Combinação de todas as perguntas dos países
+        // Combina todas as perguntas de todos os países
         let todasPerguntas = [].concat(...this.paises.map(pais => pais.perguntas));
-        // Filtra as perguntas que ainda não foram feitas
+        // Filtra perguntas que ainda não foram feitas
         let perguntasRestantes = todasPerguntas.filter(pergunta => !this.perguntasFeitas.has(pergunta.texto));
+        // Se não há perguntas restantes, exibe a tela de fim de jogo
         if (perguntasRestantes.length === 0) {
-            this.exibirFimDeJogo(); // Se não houver mais perguntas, exibe o fim de jogo
+            this.exibirFimDeJogo(this.modoJogar === 'aprender');
             return;
         }
-        // Seleciona uma nova pergunta aleatória
+        // Escolhe uma pergunta aleatória das restantes
         this.perguntaAtual = perguntasRestantes[Math.floor(Math.random() * perguntasRestantes.length)];
         this.perguntasFeitas.add(this.perguntaAtual.texto); // Marca a pergunta como feita
-        // Encontra o país atual com base na pergunta selecionada
+        // Encontra o país associado à pergunta atual
         this.paisAtual = this.paises.find(pais => pais.perguntas.includes(this.perguntaAtual)) || null;
         let containerOpcoes = document.getElementById('container-opcoes');
         if (containerOpcoes && containerPergunta) {
-            containerPergunta.innerHTML = `<h3>${this.perguntaAtual.texto}</h3>`;
-            // Embaralha as opções de resposta
+            containerPergunta.innerHTML = `<h3>${this.perguntaAtual.texto}</h3>`; // Exibe a pergunta
+            // Embaralha as opções da pergunta
             let opcoes = this.perguntaAtual.opcoes.slice();
             this.embaralharArray(opcoes);
+            // Cria botões para cada opção
             containerOpcoes.innerHTML = opcoes.map(opcao => `<button onclick="jogo.verificarResposta('${opcao}')">${opcao}</button>`).join('');
         }
     }
     // Método para verificar a resposta escolhida pelo jogador
     verificarResposta(selecionado) {
         if (selecionado === this.perguntaAtual.resposta) {
-            this.pontuacao++;
-            document.getElementById('pontuacao').innerText = `Pontuação: ${this.pontuacao}`;
+            this.pontuacao++; // Incrementa a pontuação
+            document.getElementById('pontuacao').innerText = `Pontuação: ${this.pontuacao}`; // Atualiza a pontuação na tela
             let containerBandeira = document.getElementById('container-bandeira');
             if (containerBandeira) {
                 containerBandeira.innerHTML = `<h2>${this.paisAtual.nome}, você acertou!</h2>
-                                        <img src="${this.paisAtual.urlBandeira}" alt="Bandeira" class="bandeira">`;
-                containerBandeira.classList.remove('escondido');
+                                               <img src="${this.paisAtual.urlBandeira}" alt="Bandeira" class="bandeira">`;
+                containerBandeira.classList.remove('escondido'); // Mostra a bandeira do país
             }
-            setTimeout(() => this.carregarNovaPergunta(), 3000);
+            // Toca o som de acerto
+            let somAcerto = document.getElementById('som-acerto');
+            somAcerto.play();
+            // Carrega a próxima pergunta após um atraso
+            setTimeout(() => this.carregarNovaPergunta(), 2000);
         }
         else if (this.modoJogar === 'sobrevivencia') {
-            this.exibirFimDeJogo();
+            this.exibirFimDeJogo(); // Exibe o fim de jogo no modo sobrevivência
         }
         else {
-            this.carregarNovaPergunta();
+            this.carregarNovaPergunta(); // Carrega a próxima pergunta no modo aprender
         }
     }
     // Método para exibir a tela de fim de jogo
-    exibirFimDeJogo() {
-        document.getElementById('jogo').classList.add('escondido');
+    exibirFimDeJogo(jogoZerado = false) {
+        document.getElementById('jogo').classList.add('escondido'); // Esconde a tela do jogo
         let fimDeJogoContainer = document.getElementById('fim-de-jogo');
-        if (fimDeJogoContainer) {
-            fimDeJogoContainer.classList.remove('escondido');
+        let mensagemFim = document.getElementById('mensagem-fim');
+        if (fimDeJogoContainer && mensagemFim) {
+            if (jogoZerado) {
+                mensagemFim.innerText = "Parabéns! Você zerou o jogo, acabaram as perguntas.";
+            }
+            else {
+                mensagemFim.innerText = "Você errou! Fim de jogo.";
+            }
+            fimDeJogoContainer.classList.remove('escondido'); // Mostra a tela de fim de jogo
         }
     }
     // Método para tentar novamente no modo sobrevivência
     tentarNovamente() {
         let fimDeJogoContainer = document.getElementById('fim-de-jogo');
         if (fimDeJogoContainer) {
-            fimDeJogoContainer.classList.add('escondido');
+            fimDeJogoContainer.classList.add('escondido'); // Esconde a tela de fim de jogo
         }
-        document.getElementById('jogo').classList.remove('escondido');
-        this.pontuacao = 0;
-        document.getElementById('pontuacao').innerText = `Pontuação: ${this.pontuacao}`;
-        this.perguntasFeitas.clear();
-        this.carregarNovaPergunta();
+        document.getElementById('jogo').classList.remove('escondido'); // Mostra a tela do jogo
+        this.pontuacao = 0; // Reinicia a pontuação
+        document.getElementById('pontuacao').innerText = `Pontuação: ${this.pontuacao}`; // Atualiza a pontuação na tela
+        this.perguntasFeitas.clear(); // Limpa as perguntas feitas
+        this.carregarNovaPergunta(); // Carrega uma nova pergunta
     }
     // Método para retornar ao menu principal
     retornarAoMenu() {
         let fimDeJogoContainer = document.getElementById('fim-de-jogo');
         if (fimDeJogoContainer) {
-            fimDeJogoContainer.classList.add('escondido');
+            fimDeJogoContainer.classList.add('escondido'); // Esconde a tela de fim de jogo
         }
-        document.getElementById('menu').classList.remove('escondido');
+        document.getElementById('menu').classList.remove('escondido'); // Mostra o menu principal
     }
-    // Método privado para embaralhar um array (utilizado para embaralhar as opções)
+    // Método para embaralhar um array
     embaralharArray(array) {
         for (let i = array.length - 1; i > 0; i--) {
             let j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
+            [array[i], array[j]] = [array[j], array[i]]; // Troca os elementos aleatoriamente
         }
     }
     // Método para configurar o botão de som
@@ -114,16 +127,17 @@ class JogoDeBandeiras {
         let botaoSom = document.getElementById('toggle-som');
         let musica = document.getElementById('musica');
         let somAtivado = true;
+        // Adiciona um ouvinte de eventos para alternar o som
         botaoSom.addEventListener('click', () => {
             if (somAtivado) {
-                musica.pause();
-                botaoSom.innerText = 'Ativar Som';
+                musica.pause(); // Pausa a música
+                botaoSom.innerText = 'Ativar Som'; // Altera o texto do botão
             }
             else {
-                musica.play();
-                botaoSom.innerText = 'Desativar Som';
+                musica.play(); // Toca a música
+                botaoSom.innerText = 'Desativar Som'; // Altera o texto do botão
             }
-            somAtivado = !somAtivado;
+            somAtivado = !somAtivado; // Alterna o estado do som
         });
     }
 }
@@ -288,7 +302,7 @@ let paises = [
         urlBandeira: "https://static.significados.com.br/foto/china.jpg",
         perguntas: [
             {
-                "texto": "Qual país é conhecido pela Muralha da China e pela Cidade Proibida?",
+                "texto": "Qual país é conhecido por sua grande Muralha e pela Cidade Proibida?",
                 "resposta": "China",
                 "opcoes": ["China", "Mongólia", "Coreia do Sul", "Japão"]
             }
@@ -419,7 +433,7 @@ let paises = [
 ];
 // Cria uma instância do jogo de bandeiras
 let jogo = new JogoDeBandeiras(paises);
-// Exponha os métodos no objeto global para que possam ser chamados a partir do HTML
+// Expõem os métodos no objeto global para que possam ser chamados a partir do HTML
 window.iniciarJogo = (jogar) => jogo.iniciarJogo(jogar);
 window.tentarNovamente = () => jogo.tentarNovamente();
 window.retornarAoMenu = () => jogo.retornarAoMenu();

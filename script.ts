@@ -1,84 +1,84 @@
-// Define uma interface para representar um país, incluindo nome, URL da bandeira e perguntas
+// Define uma interface para representar um país
 interface Pais {
-    nome: string;
-    urlBandeira: string;
-    perguntas: Pergunta[];
+    nome: string;  // Nome do país
+    urlBandeira: string;  // URL da imagem da bandeira do país
+    perguntas: Pergunta[];  // Lista de perguntas relacionadas ao país
 }
 
-// Define uma interface para representar uma pergunta, incluindo texto, resposta correta e opções
+// Define uma interface para representar uma pergunta
 interface Pergunta {
-    texto: string;
-    resposta: string;
-    opcoes: string[];
+    texto: string;  // Texto da pergunta
+    resposta: string;  // Resposta correta para a pergunta
+    opcoes: string[];  // Lista de opções de resposta
 }
 
-// Classe principal que gerencia o jogo de bandeiras
+// Classe principal para o jogo de bandeiras
 class JogoDeBandeiras {
-    private paises: Pais[];
-    private pontuacao: number;
-    private modoJogar: 'sobrevivencia' | 'aprender';
-    private perguntasFeitas: Set<string>; // Armazena as perguntas já feitas
-    private paisAtual: Pais | null = null;
-    private perguntaAtual: Pergunta | null = null;
+    private paises: Pais[];  // Lista de países disponíveis no jogo
+    private pontuacao: number;  // Pontuação atual do jogador
+    private modoJogar: 'sobrevivencia' | 'aprender';  // Modo do jogo (sobrevivência ou aprender)
+    private perguntasFeitas: Set<string>;  // Conjunto de perguntas que já foram feitas
+    private paisAtual: Pais | null = null;  // País atual para a pergunta
+    private perguntaAtual: Pergunta | null = null;  // Pergunta atual
 
-    // Construtor da classe que inicializa as propriedades
+    // Construtor da classe
     constructor(paises: Pais[]) {
-        this.paises = paises;
-        this.pontuacao = 0;
-        this.modoJogar = 'sobrevivencia';
-        this.perguntasFeitas = new Set();
-        this.configurarBotaoSom();
+        this.paises = paises;  // Inicializa a lista de países
+        this.pontuacao = 0;  // Inicializa a pontuação
+        this.modoJogar = 'sobrevivencia';  // Define o modo de jogo padrão
+        this.perguntasFeitas = new Set();  // Inicializa o conjunto de perguntas feitas
+        this.configurarBotaoSom();  // Configura o botão de som
     }
 
     // Método para iniciar o jogo em um modo específico
     iniciarJogo(jogar: 'sobrevivencia' | 'aprender') {
-        this.pontuacao = 0;
-        this.modoJogar = jogar;
-        this.perguntasFeitas.clear(); // Limpa as perguntas feitas ao iniciar um novo jogo
-        document.getElementById('menu')!.classList.add('escondido');
-        document.getElementById('jogo')!.classList.remove('escondido');
-        document.getElementById('pontuacao')!.innerText = `Pontuação: ${this.pontuacao}`;
-        this.carregarNovaPergunta();
+        this.pontuacao = 0;  // Reinicia a pontuação
+        this.modoJogar = jogar;  // Define o modo de jogo
+        this.perguntasFeitas.clear();  // Limpa as perguntas já feitas
+        document.getElementById('menu')!.classList.add('escondido');  // Esconde o menu
+        document.getElementById('jogo')!.classList.remove('escondido');  // Mostra o jogo
+        document.getElementById('pontuacao')!.innerText = `Pontuação: ${this.pontuacao}`;  // Atualiza a pontuação na tela
+        this.carregarNovaPergunta();  // Carrega uma nova pergunta
     }
 
-    // Método privado para carregar uma nova pergunta
+    // Método para carregar uma nova pergunta
     private carregarNovaPergunta() {
         let containerBandeira = document.getElementById('container-bandeira');
         if (containerBandeira) {
-            containerBandeira.classList.add('escondido');
-            containerBandeira.innerHTML = '';
+            containerBandeira.classList.add('escondido');  // Esconde o container da bandeira
+            containerBandeira.innerHTML = '';  // Limpa o conteúdo do container da bandeira
         }
 
         let containerPergunta = document.getElementById('container-pergunta');
         if (containerPergunta) {
-            containerPergunta.innerHTML = '';
+            containerPergunta.innerHTML = '';  // Limpa o conteúdo do container da pergunta
         }
 
-        // Combinação de todas as perguntas dos países
+        // Combina todas as perguntas de todos os países
         let todasPerguntas = ([] as Pergunta[]).concat(...this.paises.map(pais => pais.perguntas));
-
-        // Filtra as perguntas que ainda não foram feitas
+        // Filtra perguntas que ainda não foram feitas
         let perguntasRestantes = todasPerguntas.filter(pergunta => !this.perguntasFeitas.has(pergunta.texto));
 
+        // Se não há perguntas restantes, exibe a tela de fim de jogo
         if (perguntasRestantes.length === 0) {
-            this.exibirFimDeJogo(); // Se não houver mais perguntas, exibe o fim de jogo
+            this.exibirFimDeJogo(this.modoJogar === 'aprender');
             return;
         }
 
-        // Seleciona uma nova pergunta aleatória
+        // Escolhe uma pergunta aleatória das restantes
         this.perguntaAtual = perguntasRestantes[Math.floor(Math.random() * perguntasRestantes.length)];
-        this.perguntasFeitas.add(this.perguntaAtual.texto); // Marca a pergunta como feita
-
-        // Encontra o país atual com base na pergunta selecionada
+        this.perguntasFeitas.add(this.perguntaAtual.texto);  // Marca a pergunta como feita
+        // Encontra o país associado à pergunta atual
         this.paisAtual = this.paises.find(pais => pais.perguntas.includes(this.perguntaAtual!)) || null;
 
         let containerOpcoes = document.getElementById('container-opcoes');
         if (containerOpcoes && containerPergunta) {
-            containerPergunta.innerHTML = `<h3>${this.perguntaAtual!.texto}</h3>`;
+            containerPergunta.innerHTML = `<h3>${this.perguntaAtual!.texto}</h3>`;  // Exibe a pergunta
 
-            // Embaralha as opções de resposta
+            // Embaralha as opções da pergunta
             let opcoes = this.perguntaAtual!.opcoes.slice();
             this.embaralharArray(opcoes);
+            // Cria botões para cada opção
             containerOpcoes.innerHTML = opcoes.map(opcao => `<button onclick="jogo.verificarResposta('${opcao}')">${opcao}</button>`).join('');
         }
     }
@@ -86,30 +86,42 @@ class JogoDeBandeiras {
     // Método para verificar a resposta escolhida pelo jogador
     verificarResposta(selecionado: string) {
         if (selecionado === this.perguntaAtual!.resposta) {
-            this.pontuacao++;
-            document.getElementById('pontuacao')!.innerText = `Pontuação: ${this.pontuacao}`;
-
+            this.pontuacao++;  // Incrementa a pontuação
+            document.getElementById('pontuacao')!.innerText = `Pontuação: ${this.pontuacao}`;  // Atualiza a pontuação na tela
+    
             let containerBandeira = document.getElementById('container-bandeira');
             if (containerBandeira) {
                 containerBandeira.innerHTML = `<h2>${this.paisAtual!.nome}, você acertou!</h2>
-                                        <img src="${this.paisAtual!.urlBandeira}" alt="Bandeira" class="bandeira">`;
-                containerBandeira.classList.remove('escondido');
+                                               <img src="${this.paisAtual!.urlBandeira}" alt="Bandeira" class="bandeira">`;
+                containerBandeira.classList.remove('escondido');  // Mostra a bandeira do país
             }
-
-            setTimeout(() => this.carregarNovaPergunta(), 3000);
+    
+            // Toca o som de acerto
+            let somAcerto = document.getElementById('som-acerto') as HTMLAudioElement;
+            somAcerto.play();
+    
+            // Carrega a próxima pergunta após um atraso
+            setTimeout(() => this.carregarNovaPergunta(), 2000);
         } else if (this.modoJogar === 'sobrevivencia') {
-            this.exibirFimDeJogo();
+            this.exibirFimDeJogo();  // Exibe o fim de jogo no modo sobrevivência
         } else {
-            this.carregarNovaPergunta();
+            this.carregarNovaPergunta();  // Carrega a próxima pergunta no modo aprender
         }
     }
 
     // Método para exibir a tela de fim de jogo
-    private exibirFimDeJogo() {
-        document.getElementById('jogo')!.classList.add('escondido');
+    private exibirFimDeJogo(jogoZerado = false) {
+        document.getElementById('jogo')!.classList.add('escondido');  // Esconde a tela do jogo
         let fimDeJogoContainer = document.getElementById('fim-de-jogo');
-        if (fimDeJogoContainer) {
-            fimDeJogoContainer.classList.remove('escondido');
+        let mensagemFim = document.getElementById('mensagem-fim');
+
+        if (fimDeJogoContainer && mensagemFim) {
+            if (jogoZerado) {
+                mensagemFim.innerText = "Parabéns! Você zerou o jogo, acabaram as perguntas.";
+            } else {
+                mensagemFim.innerText = "Você errou! Fim de jogo.";
+            }
+            fimDeJogoContainer.classList.remove('escondido');  // Mostra a tela de fim de jogo
         }
     }
 
@@ -117,29 +129,29 @@ class JogoDeBandeiras {
     tentarNovamente() {
         let fimDeJogoContainer = document.getElementById('fim-de-jogo');
         if (fimDeJogoContainer) {
-            fimDeJogoContainer.classList.add('escondido');
+            fimDeJogoContainer.classList.add('escondido');  // Esconde a tela de fim de jogo
         }
-        document.getElementById('jogo')!.classList.remove('escondido');
-        this.pontuacao = 0;
-        document.getElementById('pontuacao')!.innerText = `Pontuação: ${this.pontuacao}`;
-        this.perguntasFeitas.clear();
-        this.carregarNovaPergunta();
+        document.getElementById('jogo')!.classList.remove('escondido');  // Mostra a tela do jogo
+        this.pontuacao = 0;  // Reinicia a pontuação
+        document.getElementById('pontuacao')!.innerText = `Pontuação: ${this.pontuacao}`;  // Atualiza a pontuação na tela
+        this.perguntasFeitas.clear();  // Limpa as perguntas feitas
+        this.carregarNovaPergunta();  // Carrega uma nova pergunta
     }
 
     // Método para retornar ao menu principal
     retornarAoMenu() {
         let fimDeJogoContainer = document.getElementById('fim-de-jogo');
         if (fimDeJogoContainer) {
-            fimDeJogoContainer.classList.add('escondido');
+            fimDeJogoContainer.classList.add('escondido');  // Esconde a tela de fim de jogo
         }
-        document.getElementById('menu')!.classList.remove('escondido');
+        document.getElementById('menu')!.classList.remove('escondido');  // Mostra o menu principal
     }
 
-    // Método privado para embaralhar um array (utilizado para embaralhar as opções)
+    // Método para embaralhar um array
     private embaralharArray(array: any[]) {
         for (let i = array.length - 1; i > 0; i--) {
             let j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
+            [array[i], array[j]] = [array[j], array[i]];  // Troca os elementos aleatoriamente
         }
     }
 
@@ -149,18 +161,20 @@ class JogoDeBandeiras {
         let musica = document.getElementById('musica') as HTMLAudioElement;
         let somAtivado = true;
 
+        // Adiciona um ouvinte de eventos para alternar o som
         botaoSom.addEventListener('click', () => {
             if (somAtivado) {
-                musica.pause();
-                botaoSom.innerText = 'Ativar Som';
+                musica.pause();  // Pausa a música
+                botaoSom.innerText = 'Ativar Som';  // Altera o texto do botão
             } else {
-                musica.play();
-                botaoSom.innerText = 'Desativar Som';
+                musica.play();  // Toca a música
+                botaoSom.innerText = 'Desativar Som';  // Altera o texto do botão
             }
-            somAtivado = !somAtivado;
+            somAtivado = !somAtivado;  // Alterna o estado do som
         });
     }
 }
+
 
 // Lista de países com suas respectivas bandeiras e perguntas
 let paises: Pais[] = [
@@ -323,7 +337,7 @@ let paises: Pais[] = [
         urlBandeira: "https://static.significados.com.br/foto/china.jpg",
         perguntas: [
             {
-                "texto": "Qual país é conhecido pela Muralha da China e pela Cidade Proibida?",
+                "texto": "Qual país é conhecido por sua grande Muralha e pela Cidade Proibida?",
                 "resposta": "China",
                 "opcoes": ["China", "Mongólia", "Coreia do Sul", "Japão"]
             }
@@ -451,13 +465,13 @@ let paises: Pais[] = [
         ]
     }
 
-     // ☝🏻 ACIMA TODAS AS PERGUNTAS ESTÃO COM AS IMAGENS DAS BANDEIRAS!!!
+    // ☝🏻 ACIMA TODAS AS PERGUNTAS ESTÃO COM AS IMAGENS DAS BANDEIRAS!!!
 ];
 
 // Cria uma instância do jogo de bandeiras
 let jogo = new JogoDeBandeiras(paises);
 
-// Exponha os métodos no objeto global para que possam ser chamados a partir do HTML
+// Expõem os métodos no objeto global para que possam ser chamados a partir do HTML
 (window as any).iniciarJogo = (jogar: 'sobrevivencia' | 'aprender') => jogo.iniciarJogo(jogar);
 (window as any).tentarNovamente = () => jogo.tentarNovamente();
 (window as any).retornarAoMenu = () => jogo.retornarAoMenu();
