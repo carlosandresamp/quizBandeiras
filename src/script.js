@@ -285,7 +285,7 @@ let paises = [
     },
     {
         nome: "China",
-        urlBandeira: "https://pt.wikipedia.org/wiki/Bandeira_da_China#/media/Ficheiro:Flag_of_the_People's_Republic_of_China.svg",
+        urlBandeira: "https://static.significados.com.br/foto/china.jpg",
         perguntas: [
             {
                 "texto": "Qual país é conhecido pela Muralha da China e pela Cidade Proibida?",

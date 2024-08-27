@@ -97,6 +97,7 @@ button:hover {
     width: 250px;
     height: auto;
     border-radius: 5mm;
+    border: 5px solid rgb(0, 0, 0);
 }
 
 #toggle-som {
