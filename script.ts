@@ -169,7 +169,7 @@ let paises: Pais[] = [
         urlBandeira: "https://upload.wikimedia.org/wikipedia/en/0/05/Flag_of_Brazil.svg",
         perguntas: [
             {
-                texto: "É o país do futebol...",
+                texto: "Qual é o país do futebol?",
                 resposta: "Brasil",
                 opcoes: ["Venezuela", "Acre", "Brasil", "México"]
             }
@@ -177,7 +177,7 @@ let paises: Pais[] = [
     },
     {
         nome: "Argentina",
-        urlBandeira: "https://static.mundoeducacao.uol.com.br/mundoeducacao/2023/01/bandeira-da-argentina.jpg",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg",
         perguntas: [
             {
                 texto: "São os maiores rivais do Brasil no futebol...",
@@ -320,7 +320,7 @@ let paises: Pais[] = [
     },
     {
         nome: "China",
-        urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/0/0f/Flag_of_China.svg",
+        urlBandeira: "https://pt.wikipedia.org/wiki/Bandeira_da_China#/media/Ficheiro:Flag_of_the_People's_Republic_of_China.svg",
         perguntas: [
             {
                 "texto": "Qual país é conhecido pela Muralha da China e pela Cidade Proibida?",
