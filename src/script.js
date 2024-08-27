@@ -142,6 +142,13 @@ class JogoDeBandeiras {
         });
     }
 }
-// Cria uma instância do jogo de bandeiras
+// Correção/Revisão
 let jogo = new JogoDeBandeiras(paises);
-// Expõem os métodos no objeto global para que possam ser chamados a partir do HTML
+let botSob = document.getElementById('botaoSobrevivencia');
+botSob.onclick = () => {
+    jogo.iniciarJogo('sobrevivencia');
+};
+let botApr = document.getElementById('botaoAprender');
+botApr.onclick = () => {
+    jogo.iniciarJogo('aprender');
+};

@@ -163,3 +163,19 @@ class JogoDeBandeiras {
         });
     }
 }
+
+
+// Correção/Revisão
+let jogo = new JogoDeBandeiras(paises);
+
+
+let botSob = document.getElementById('botaoSobrevivencia')!;
+botSob.onclick = ()=>{
+    jogo.iniciarJogo('sobrevivencia');
+};
+
+
+let botApr = document.getElementById('botaoAprender')!;
+botApr.onclick = ()=>{
+    jogo.iniciarJogo('aprender');
+};
