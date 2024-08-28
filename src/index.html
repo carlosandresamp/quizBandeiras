@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<!-- Define o idioma da página como português do Brasil -->
+<!-- Define o idioma principal da página como português do Brasil -->
 
 <head>
     <meta charset="UTF-8">
@@ -12,7 +12,7 @@
     <title>Quiz Bandeiras</title>
     <!-- Define o título da página que aparece na aba do navegador -->
     <link rel="icon" href="./img/globo_favicon.png">
-    <!-- define a favicon do quizz -->
+    <!-- Define a favicon do quiz -->
 </head>
 
 <body>
@@ -42,12 +42,12 @@
         </div>
 
         <div id="fim-de-jogo" class="escondido">
-            <!-- Div para exibir o fim de jogo, inicialmente escondido -->
+            <!-- Div para exibir o fim de jogo, inicialmente escondida -->
             <h2 id="mensagem-fim"></h2>
             <!-- Mensagem de fim de jogo que será exibida após o término do jogo -->
-            <button onclick="tentarNovamente()">Jogar Novamente</button>
+            <button id="botaoTentarNovamente">Jogar Novamente</button>
             <!-- Botão para tentar jogar novamente -->
-            <button onclick="retornarAoMenu()">Retornar ao Menu</button>
+            <button id="botaoRetornarAoMenu">Retornar ao Menu</button>
             <!-- Botão para retornar ao menu principal -->
         </div>
     </div>

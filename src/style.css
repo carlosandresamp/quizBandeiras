@@ -1,107 +1,130 @@
-/* Estilo base */
+/* Estilo base para o corpo da página */
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: rgb(179, 179, 179);
-    margin: 0;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-image: url(img/background.png);
-    background-size: cover;
-    background-position: center;
+    font-family: Arial, sans-serif; /* Define a fonte principal */
+    text-align: center; /* Centraliza o texto */
+    background-color: rgb(179, 179, 179); /* Cor de fundo cinza claro */
+    margin: 0; /* Remove margens padrão */
+    padding: 20px; /* Adiciona preenchimento ao redor do conteúdo */
+    display: flex; /* Define um layout flexível para centralização */
+    justify-content: center; /* Centraliza horizontalmente o conteúdo */
+    align-items: center; /* Centraliza verticalmente o conteúdo */
+    height: 100vh; /* Define a altura como 100% da altura da viewport */
+    background-image: url(img/background.png); /* Adiciona uma imagem de fundo */
+    background-size: cover; /* A imagem de fundo cobre toda a área */
+    background-position: center; /* Centraliza a posição da imagem de fundo */
 }
 
-/* Container estilizado */
+/* Estilo para o container principal do quiz */
 .container-estilizada {
-    background-color: white;
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    width: 100%;
-
-    max-width: 600px; /* Largura máxima para manter responsivo */
-    text-align: center;
+    background-color: white; /* Fundo branco */
+    border-radius: 15px; /* Bordas arredondadas */
+    padding: 20px; /* Preenchimento interno */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra ao redor do container */
+    width: 100%; /* Largura total do container */
+    max-width: 600px; /* Define a largura máxima para manter o design responsivo */
+    text-align: center; /* Centraliza o texto dentro do container */
 }
 
+/* Classe para esconder elementos */
 .escondido {
-    display: none;
+    display: none; /* Esconde o elemento da visualização */
 }
 
+/* Estilo base para botões */
 button {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 5mm;
-    background-color: red;
-    color: white;
-    border: none;
-    transition: background-color 0.3s, transform 0.3s;
+    padding: 10px 20px; /* Espaçamento interno */
+    font-size: 16px; /* Tamanho da fonte */
+    cursor: pointer; /* Cursor de mão ao passar sobre o botão */
+    border-radius: 5mm; /* Bordas arredondadas */
+    background-color: red; /* Cor de fundo vermelha */
+    color: white; /* Cor do texto branca */
+    border: none; /* Remove a borda padrão */
+    transition: background-color 0.3s, transform 0.3s; /* Transições suaves para cor de fundo e escala */
 }
 
+/* Estilo para o estado de 'hover' dos botões */
 button:hover {
-    background-color: darkred;
-    transform: scale(1.05);
+    background-color: darkred; /* Cor de fundo ao passar o mouse */
+    transform: scale(1.05); /* Aumenta ligeiramente o botão */
 }
 
+/* Estilo para títulos e subtítulos */
 #menu h1, #fim-de-jogo h2 {
-    margin-bottom: 40px;
-    color: black;
+    margin-bottom: 40px; /* Espaçamento abaixo do título */
+    color: black; /* Cor do texto preta */
 }
 
+/* Estilo para botões nos menus e na tela de fim de jogo */
 #menu button, #fim-de-jogo button {
-    margin-bottom: 20px;
-    width: 200px;
-    display: block; /* Altera para 'block' para garantir que cada botão ocupe uma linha */
-    margin-left: auto;
-    margin-right: auto;
-    justify-content: center;
+    margin-bottom: 20px; /* Espaçamento abaixo do botão */
+    width: 200px; /* Largura fixa dos botões */
+    display: block; /* Exibe cada botão em uma nova linha */
+    margin-left: auto; /* Centraliza o botão horizontalmente */
+    margin-right: auto; /* Centraliza o botão horizontalmente */
+    justify-content: center; /* Centraliza o conteúdo do botão */
 }
 
-
+/* Estilo para a pontuação */
 #pontuacao {
-    color: black;
+    color: black; /* Cor do texto preta */
 }
 
+/* Margem ao redor do container de bandeiras */
 #container-bandeira {
     margin: 20px;
 }
 
+/* Estilo para o container de opções */
 #container-opcoes {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
+    display: flex; /* Layout flexível para organizar as opções */
+    flex-direction: column; /* Alinha os itens em uma coluna */
+    align-items: center; /* Centraliza os itens horizontalmente */
+    gap: 10px; /* Espaçamento entre as opções */
 }
 
+/* Estilo para os botões de opções */
 #container-opcoes button {
-    width: 70%;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
+    width: 70%; /* Largura dos botões de opções */
+    padding: 10px 20px; /* Espaçamento interno */
+    font-size: 16px; /* Tamanho da fonte */
+    cursor: pointer; /* Cursor de mão ao passar sobre o botão */
 }
 
+/* Estilo para o container de perguntas */
 #container-pergunta h3 {
-    color: black;
+    color: black; /* Cor do texto preta */
 }
 
+/* Estilo para o título dentro do container de bandeiras */
 #container-bandeira h2 {
-    color: black;
-    font-size: 24px;
-    margin-bottom: 20px;
+    color: black; /* Cor do texto preta */
+    font-size: 24px; /* Tamanho da fonte */
+    margin-bottom: 20px; /* Espaçamento abaixo do título */
 }
 
+/* Estilo para a imagem da bandeira */
 .bandeira {
-    width: 250px;
-    height: auto;
-    border-radius: 5mm;
-    border: 5px solid rgb(0, 0, 0);
+    width: 250px; /* Largura da bandeira */
+    height: auto; /* Altura ajustada proporcionalmente */
+    border-radius: 5mm; /* Bordas arredondadas */
+    border: 5px solid rgb(0, 0, 0); /* Borda preta ao redor da bandeira */
 }
 
+/* Estilo para o botão de som */
 #toggle-som {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
+    position: fixed; /* Posição fixa na tela */
+    bottom: 20px; /* Distância da parte inferior */
+    right: 20px; /* Distância da parte direita */
+}
+
+/* Estilo para o cronômetro */
+#cronometro {
+    color: #000000; /* Cor do texto preta */
+    margin: 25px; /* Espaçamento ao redor */
+}
+
+/* Estilo para a opção correta */
+.correta {
+    background-color: green; /* Cor de fundo verde */
+    color: white; /* Cor do texto branca */
 }

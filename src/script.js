@@ -1,154 +1,216 @@
-// Importa as interfaces e a lista de países do arquivo perguntas.ts
+// Importa as interfaces ou classes 'Pais', 'Pergunta' e o array 'paises' de um arquivo externo
 import { paises } from './perguntas.js';
-// Classe principal para o jogo de bandeiras
+// Define uma classe para o jogo de bandeiras
 class JogoDeBandeiras {
-    // Construtor da classe
+    // Construtor da classe, é chamado quando uma instância da classe é criada
     constructor(paises) {
-        this.paisAtual = null; // País atual para a pergunta
+        this.paisAtual = null; // País atual da pergunta
         this.perguntaAtual = null; // Pergunta atual
+        this.cronometro = null; // ID do cronômetro
+        this.tempoRestante = 7; // Tempo limite por pergunta em segundos
         this.paises = paises; // Inicializa a lista de países
-        this.pontuacao = 0; // Inicializa a pontuação
-        this.modoJogar = 'sobrevivencia'; // Define o modo de jogo padrão
+        this.pontuacao = 0; // Inicializa a pontuação com zero
+        this.modoJogar = 'sobrevivencia'; // Define o modo padrão de jogo como sobrevivência
         this.perguntasFeitas = new Set(); // Inicializa o conjunto de perguntas feitas
-        this.configurarBotaoSom(); // Configura o botão de som
+        this.configurarBotoesIniciais(); // Configura os botões iniciais do jogo
+        this.configurarBotaoSom(); // Configura o botão de controle do som
+        this.configurarBotoesFinais(); // Configura os botões para o final do jogo
     }
-    // Método para iniciar o jogo em um modo específico
+    // Configura os botões de seleção do modo de jogo na interface
+    configurarBotoesIniciais() {
+        document.getElementById('botaoSobrevivencia').onclick = () => this.iniciarJogo('sobrevivencia');
+        document.getElementById('botaoAprender').onclick = () => this.iniciarJogo('aprender');
+    }
+    // Inicia o jogo no modo selecionado
     iniciarJogo(jogar) {
-        this.pontuacao = 0; // Reinicia a pontuação
+        this.pontuacao = 0; // Reseta a pontuação
         this.modoJogar = jogar; // Define o modo de jogo
-        this.perguntasFeitas.clear(); // Limpa as perguntas já feitas
-        document.getElementById('menu').classList.add('escondido'); // Esconde o menu
+        this.perguntasFeitas.clear(); // Limpa as perguntas feitas
+        document.getElementById('menu').classList.add('escondido'); // Esconde o menu inicial
         document.getElementById('jogo').classList.remove('escondido'); // Mostra o jogo
+        document.getElementById('fim-de-jogo').classList.add('escondido'); // Esconde a tela de fim de jogo
         document.getElementById('pontuacao').innerText = `Pontuação: ${this.pontuacao}`; // Atualiza a pontuação na tela
-        this.carregarNovaPergunta(); // Carrega uma nova pergunta
+        this.carregarNovaPergunta(); // Carrega a primeira pergunta
     }
-    // Método para carregar uma nova pergunta
+    // Carrega uma nova pergunta e exibe na interface
     carregarNovaPergunta() {
+        // Esconde o contêiner da bandeira e limpa seu conteúdo
         let containerBandeira = document.getElementById('container-bandeira');
         if (containerBandeira) {
-            containerBandeira.classList.add('escondido'); // Esconde o container da bandeira
-            containerBandeira.innerHTML = ''; // Limpa o conteúdo do container da bandeira
+            containerBandeira.classList.add('escondido');
+            containerBandeira.innerHTML = '';
         }
+        // Limpa o contêiner da pergunta
         let containerPergunta = document.getElementById('container-pergunta');
         if (containerPergunta) {
-            containerPergunta.innerHTML = ''; // Limpa o conteúdo do container da pergunta
+            containerPergunta.innerHTML = '';
         }
-        // Combina todas as perguntas de todos os países
+        // Combina todas as perguntas dos países em um único array
         let todasPerguntas = [].concat(...this.paises.map(pais => pais.perguntas));
-        // Filtra perguntas que ainda não foram feitas
+        // Filtra as perguntas que ainda não foram feitas
         let perguntasRestantes = todasPerguntas.filter(pergunta => !this.perguntasFeitas.has(pergunta.texto));
-        // Se não há perguntas restantes, exibe a tela de fim de jogo
+        // Verifica se ainda há perguntas restantes, se não houver, exibe o fim do jogo
         if (perguntasRestantes.length === 0) {
             this.exibirFimDeJogo(this.modoJogar === 'aprender');
             return;
         }
-        // Escolhe uma pergunta aleatória das restantes
+        // Seleciona uma pergunta aleatória entre as restantes
         this.perguntaAtual = perguntasRestantes[Math.floor(Math.random() * perguntasRestantes.length)];
         this.perguntasFeitas.add(this.perguntaAtual.texto); // Marca a pergunta como feita
-        // Encontra o país associado à pergunta atual
+        // Encontra o país correspondente à pergunta atual
         this.paisAtual = this.paises.find(pais => pais.perguntas.includes(this.perguntaAtual)) || null;
+        // Prepara a interface para exibir a nova pergunta e suas opções
         let containerOpcoes = document.getElementById('container-opcoes');
         if (containerOpcoes && containerPergunta) {
-            containerPergunta.innerHTML = `<h3>${this.perguntaAtual.texto}</h3>`; // Exibe a pergunta
-            // Embaralha as opções da pergunta
-            let opcoes = this.perguntaAtual.opcoes.slice();
-            this.embaralharArray(opcoes);
-            // Cria botões para cada opção
-            containerOpcoes.innerHTML = opcoes.map(opcao => `<button onclick="jogo.verificarResposta('${opcao}')">${opcao}</button>`).join('');
+            containerPergunta.innerHTML = `<h3>${this.perguntaAtual.texto}</h3>`;
+            let opcoes = this.perguntaAtual.opcoes.slice(); // Copia as opções da pergunta
+            this.embaralharArray(opcoes); // Embaralha as opções para exibição aleatória
+            containerOpcoes.innerHTML = opcoes.map(opcao => `<button id="opcao-${opcao.replace(/\s+/g, '-')}">${opcao}</button>`).join('');
+            // Configura o evento de clique para cada opção
+            opcoes.forEach(opcao => {
+                let botaoOpcao = document.getElementById(`opcao-${opcao.replace(/\s+/g, '-')}`);
+                if (botaoOpcao) {
+                    botaoOpcao.onclick = () => this.verificarResposta(opcao);
+                }
+            });
+        }
+        // Inicia o cronômetro se o modo de jogo for 'sobrevivência'
+        if (this.modoJogar === 'sobrevivencia') {
+            this.iniciarCronometro();
         }
     }
-    // Método para verificar a resposta escolhida pelo jogador
+    // Inicia o cronômetro de contagem regressiva para responder a pergunta
+    iniciarCronometro() {
+        var _a;
+        this.tempoRestante = 7; // Define o tempo inicial como 7 segundos
+        let cronometroElemento = document.createElement('div');
+        cronometroElemento.id = 'cronometro';
+        cronometroElemento.innerText = `Tempo restante: ${this.tempoRestante}s`;
+        (_a = document.getElementById('container-pergunta')) === null || _a === void 0 ? void 0 : _a.appendChild(cronometroElemento);
+        // Limpa qualquer cronômetro anterior
+        if (this.cronometro) {
+            clearInterval(this.cronometro);
+        }
+        // Define o cronômetro para diminuir o tempo a cada segundo
+        this.cronometro = setInterval(() => {
+            this.tempoRestante--;
+            cronometroElemento.innerText = `Tempo restante: ${this.tempoRestante}s`;
+            // Quando o tempo acabar, verificar o modo de jogo e proceder adequadamente
+            if (this.tempoRestante <= 0) {
+                clearInterval(this.cronometro);
+                if (this.modoJogar === 'sobrevivencia') {
+                    this.exibirFimDeJogo(false, "O tempo acabou! Fim de jogo.");
+                }
+                else {
+                    this.carregarNovaPergunta();
+                }
+            }
+        }, 1000); // Intervalo de 1 segundo
+    }
+    // Verifica se a resposta selecionada está correta
     verificarResposta(selecionado) {
+        clearInterval(this.cronometro); // Para o cronômetro após a resposta
+        let opcoes = document.querySelectorAll('#container-opcoes button');
+        // Marca a resposta correta visualmente
+        opcoes.forEach((botao) => {
+            if (botao.innerText === this.perguntaAtual.resposta) {
+                botao.classList.add('correta');
+            }
+        });
+        // Se a resposta selecionada estiver correta, aumenta a pontuação e exibe a bandeira do país
         if (selecionado === this.perguntaAtual.resposta) {
-            this.pontuacao++; // Incrementa a pontuação
-            document.getElementById('pontuacao').innerText = `Pontuação: ${this.pontuacao}`; // Atualiza a pontuação na tela
+            this.pontuacao++;
+            document.getElementById('pontuacao').innerText = `Pontuação: ${this.pontuacao}`;
             let containerBandeira = document.getElementById('container-bandeira');
             if (containerBandeira) {
                 containerBandeira.innerHTML = `<h2>${this.paisAtual.nome}, você acertou!</h2>
                                                <img src="${this.paisAtual.urlBandeira}" alt="Bandeira" class="bandeira">`;
-                containerBandeira.classList.remove('escondido'); // Mostra a bandeira do país
+                containerBandeira.classList.remove('escondido');
             }
-            // Toca o som de acerto
             let somAcerto = document.getElementById('som-acerto');
             somAcerto.play();
-            // Carrega a próxima pergunta após um atraso
-            setTimeout(() => this.carregarNovaPergunta(), 2000);
+            setTimeout(() => this.carregarNovaPergunta(), 2000); // Carrega a próxima pergunta após 2 segundos
         }
         else if (this.modoJogar === 'sobrevivencia') {
-            this.exibirFimDeJogo(); // Exibe o fim de jogo no modo sobrevivência
+            this.exibirFimDeJogo(); // Se errar no modo sobrevivência, termina o jogo
         }
         else {
-            this.carregarNovaPergunta(); // Carrega a próxima pergunta no modo aprender
+            setTimeout(() => this.carregarNovaPergunta(), 2000); // No modo 'aprender', carrega a próxima pergunta após 2 segundos
         }
     }
-    // Método para exibir a tela de fim de jogo
-    exibirFimDeJogo(jogoZerado = false) {
-        document.getElementById('jogo').classList.add('escondido'); // Esconde a tela do jogo
+    // Exibe a tela de fim de jogo com uma mensagem apropriada
+    exibirFimDeJogo(jogoZerado = false, mensagemPersonalizada) {
+        if (this.cronometro) {
+            clearInterval(this.cronometro);
+        }
+        document.getElementById('jogo').classList.add('escondido');
         let fimDeJogoContainer = document.getElementById('fim-de-jogo');
         let mensagemFim = document.getElementById('mensagem-fim');
+        // Define a mensagem de fim de jogo
         if (fimDeJogoContainer && mensagemFim) {
-            if (jogoZerado) {
-                mensagemFim.innerText = "Parabéns! Você zerou o jogo, acabaram as perguntas.";
-            }
-            else {
-                mensagemFim.innerText = "Você errou! Fim de jogo.";
-            }
-            fimDeJogoContainer.classList.remove('escondido'); // Mostra a tela de fim de jogo
+            mensagemFim.innerText = mensagemPersonalizada
+                ? mensagemPersonalizada
+                : jogoZerado
+                    ? "Parabéns! Você zerou o jogo, acabaram as perguntas."
+                    : "Você errou! Fim de jogo.";
+            fimDeJogoContainer.classList.remove('escondido');
         }
+        this.configurarBotoesFinais(); // Configura os botões para tentar novamente ou voltar ao menu
     }
-    // Método para tentar novamente no modo sobrevivência
+    // Reinicia o jogo quando o jogador clica em "Tentar Novamente"
     tentarNovamente() {
         let fimDeJogoContainer = document.getElementById('fim-de-jogo');
         if (fimDeJogoContainer) {
-            fimDeJogoContainer.classList.add('escondido'); // Esconde a tela de fim de jogo
+            fimDeJogoContainer.classList.add('escondido');
         }
-        document.getElementById('jogo').classList.remove('escondido'); // Mostra a tela do jogo
-        this.pontuacao = 0; // Reinicia a pontuação
-        document.getElementById('pontuacao').innerText = `Pontuação: ${this.pontuacao}`; // Atualiza a pontuação na tela
+        document.getElementById('jogo').classList.remove('escondido');
+        this.pontuacao = 0;
+        document.getElementById('pontuacao').innerText = `Pontuação: ${this.pontuacao}`;
         this.perguntasFeitas.clear(); // Limpa as perguntas feitas
-        this.carregarNovaPergunta(); // Carrega uma nova pergunta
+        this.carregarNovaPergunta(); // Carrega a primeira pergunta
     }
-    // Método para retornar ao menu principal
+    // Volta ao menu inicial quando o jogador clica em "Retornar ao Menu"
     retornarAoMenu() {
         let fimDeJogoContainer = document.getElementById('fim-de-jogo');
         if (fimDeJogoContainer) {
-            fimDeJogoContainer.classList.add('escondido'); // Esconde a tela de fim de jogo
+            fimDeJogoContainer.classList.add('escondido');
         }
-        document.getElementById('menu').classList.remove('escondido'); // Mostra o menu principal
+        document.getElementById('menu').classList.remove('escondido');
     }
-    // Método para embaralhar um array
+    // Embaralha um array usando o algoritmo de Fisher-Yates
     embaralharArray(array) {
         for (let i = array.length - 1; i > 0; i--) {
             let j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]]; // Troca os elementos aleatoriamente
+            [array[i], array[j]] = [array[j], array[i]]; // Troca os elementos de posição
         }
     }
-    // Método para configurar o botão de som
+    // Configura o botão de som para alternar entre ativar e desativar a música de fundo
     configurarBotaoSom() {
         let botaoSom = document.getElementById('toggle-som');
         let musica = document.getElementById('musica');
         let somAtivado = true;
-        // Adiciona um ouvinte de eventos para alternar o som
+        // Adiciona o evento de clique para controlar o som
         botaoSom.addEventListener('click', () => {
             if (somAtivado) {
                 musica.pause(); // Pausa a música
-                botaoSom.innerText = 'Ativar Som'; // Altera o texto do botão
+                botaoSom.innerText = 'Ativar Som'; // Atualiza o texto do botão
             }
             else {
-                musica.play(); // Toca a música
-                botaoSom.innerText = 'Desativar Som'; // Altera o texto do botão
+                musica.play(); // Reproduz a música
+                botaoSom.innerText = 'Desativar Som'; // Atualiza o texto do botão
             }
             somAtivado = !somAtivado; // Alterna o estado do som
         });
     }
+    // Configura os botões para o final do jogo
+    configurarBotoesFinais() {
+        let botaoTentarNovamente = document.getElementById('botaoTentarNovamente');
+        let botaoRetornarAoMenu = document.getElementById('botaoRetornarAoMenu');
+        if (botaoTentarNovamente && botaoRetornarAoMenu) {
+            botaoTentarNovamente.onclick = () => this.tentarNovamente(); // Reinicia o jogo
+            botaoRetornarAoMenu.onclick = () => this.retornarAoMenu(); // Volta ao menu inicial
+        }
+    }
 }
-// Correção/Revisão
+// Cria uma nova instância do jogo, passando a lista de países como parâmetro
 let jogo = new JogoDeBandeiras(paises);
-let botSob = document.getElementById('botaoSobrevivencia');
-botSob.onclick = () => {
-    jogo.iniciarJogo('sobrevivencia');
-};
-let botApr = document.getElementById('botaoAprender');
-botApr.onclick = () => {
-    jogo.iniciarJogo('aprender');
-};
