@@ -107,7 +107,7 @@ button:hover {
     width: 250px; /* Largura da bandeira */
     height: auto; /* Altura ajustada proporcionalmente */
     border-radius: 5mm; /* Bordas arredondadas */
-    border: 5px solid rgb(0, 0, 0); /* Borda preta ao redor da bandeira */
+    border: 2px solid rgb(0, 0, 0); /* Borda preta ao redor da bandeira */
 }
 
 /* Estilo para o botão de som */
