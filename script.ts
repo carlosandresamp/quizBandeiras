@@ -251,3 +251,6 @@ class JogoDeBandeiras {
 
 // Cria uma nova instância do jogo, passando a lista de países como parâmetro
 let jogo = new JogoDeBandeiras(paises);
+
+
+let jogo = new JogoDeBandeiras(paises);
