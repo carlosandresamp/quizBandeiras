@@ -60,7 +60,7 @@ export let paises: Pais[] = [
     },
     {
         nome: "Canadá",
-        urlBandeira: "https://upload.wikimedia.org/wikipedia/en/c/cf/Flag_of_Canada.png",
+        urlBandeira: "https://th.bing.com/th/id/OIP.33a-T-OTWFdAc2NcZKqw4AHaD_?w=338&h=182&c=7&r=0&o=5&pid=1.7",
         perguntas: [
             {
                 "texto": "Qual país é o segundo maior do mundo em área territorial?",
