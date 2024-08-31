@@ -11,7 +11,7 @@ class JogoDeBandeiras {
     paisAtual: Pais | null = null;    // País atual da pergunta
     perguntaAtual: Pergunta | null = null; // Pergunta atual
     cronometro: number | null = null; // ID do cronômetro
-    tempoRestante: number = 7;       // Tempo limite por pergunta em segundos
+    tempoRestante: number = 10;       // Tempo limite por pergunta em segundos
 
     // Construtor da classe, é chamado quando uma instância da classe é criada
     constructor(paises: Pais[]) {
@@ -101,7 +101,7 @@ class JogoDeBandeiras {
 
     // Inicia o cronômetro de contagem regressiva para responder a pergunta
     iniciarCronometro() {
-        this.tempoRestante = 7; // Define o tempo inicial como 7 segundos
+        this.tempoRestante = 10; // Define o tempo inicial como 10 segundos
         let cronometroElemento = document.createElement('div');
         cronometroElemento.id = 'cronometro';
         cronometroElemento.innerText = `Tempo restante: ${this.tempoRestante}s`;
