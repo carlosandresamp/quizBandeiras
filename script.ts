@@ -12,6 +12,7 @@ class JogoDeBandeiras {
     perguntaAtual: Pergunta | null = null; // Pergunta atual
     cronometro: number | null = null; // ID do cronômetro
     tempoRestante: number = 10;       // Tempo limite por pergunta em segundos
+    nomeJogador: string = '';
 
     // Construtor da classe, é chamado quando uma instância da classe é criada
     constructor(paises: Pais[]) {
@@ -32,13 +33,14 @@ class JogoDeBandeiras {
 
     // Inicia o jogo no modo selecionado
     iniciarJogo(jogar: 'sobrevivencia' | 'aprender') {
+        this.nomeJogador = prompt('Digite seu nome de jogador:', '') || 'Jogador';
         this.pontuacao = 0;                     // Reseta a pontuação
         this.modoJogar = jogar;                 // Define o modo de jogo
         this.perguntasFeitas.clear();           // Limpa as perguntas feitas
         document.getElementById('menu')!.classList.add('escondido'); // Esconde o menu inicial
         document.getElementById('jogo')!.classList.remove('escondido'); // Mostra o jogo
         document.getElementById('fim-de-jogo')!.classList.add('escondido'); // Esconde a tela de fim de jogo
-        document.getElementById('pontuacao')!.innerText = `Pontuação: ${this.pontuacao}`; // Atualiza a pontuação na tela
+        document.getElementById('pontuacao')!.innerText = `${this.nomeJogador} - Pontuação: ${this.pontuacao}`; // Atualiza a pontuação na tela
         this.carregarNovaPergunta();            // Carrega a primeira pergunta
     }
 
@@ -83,7 +85,7 @@ class JogoDeBandeiras {
             let opcoes = this.perguntaAtual!.opcoes.slice(); // Copia as opções da pergunta
             this.embaralharArray(opcoes); // Embaralha as opções para exibição aleatória
             containerOpcoes.innerHTML = opcoes.map(opcao => `<button id="opcao-${opcao.replace(/\s+/g, '-')}">${opcao}</button>`).join('');
-            
+
             // Configura o evento de clique para cada opção
             opcoes.forEach(opcao => {
                 let botaoOpcao = document.getElementById(`opcao-${opcao.replace(/\s+/g, '-')}`);
@@ -135,33 +137,45 @@ class JogoDeBandeiras {
 
         let opcoes = document.querySelectorAll('#container-opcoes button');
 
-        // Marca a resposta correta visualmente
-        opcoes.forEach((botao) => {
-            if ((botao as HTMLButtonElement).innerText === this.perguntaAtual!.resposta) {
-                botao.classList.add('correta');
-            }
-        });
-
-        // Se a resposta selecionada estiver correta, aumenta a pontuação e exibe a bandeira do país
-        if (selecionado === this.perguntaAtual!.resposta) {
-            this.pontuacao++;
-            (document.getElementById('pontuacao') as HTMLElement).innerText = `Pontuação: ${this.pontuacao}`;
+        // Marca a resposta correta visualmente em verde em ambos os modos "sobrevivência" e "aprender"
+        if (this.modoJogar === 'sobrevivencia', 'aprender') {
+            opcoes.forEach((botao) => {
+                if ((botao as HTMLButtonElement).innerText === this.perguntaAtual!.resposta) {
+                    botao.classList.add('correta');
+                }
+            });
 
             let containerBandeira = document.getElementById('container-bandeira');
             if (containerBandeira) {
-                containerBandeira.innerHTML = `<h2>${this.paisAtual!.nome}, você acertou!</h2>
-                                               <img src="${this.paisAtual!.urlBandeira}" alt="Bandeira" class="bandeira">`;
+                containerBandeira.innerHTML = `<h2>${this.paisAtual!.nome}</h2>
+                                           <img src="${this.paisAtual!.urlBandeira}" alt="Bandeira" class="bandeira">`;
                 containerBandeira.classList.remove('escondido');
             }
+        }
+
+        if (selecionado === this.perguntaAtual!.resposta) {
+            this.pontuacao++;
+            (document.getElementById('pontuacao') as HTMLElement).innerText = `${this.nomeJogador} - Pontuação: ${this.pontuacao}`; // Atualiza a exibição da pontuação com o nome do jogador
 
             let somAcerto = document.getElementById('som-acerto') as HTMLAudioElement;
             somAcerto.play();
 
-            setTimeout(() => this.carregarNovaPergunta(), 2000); // Carrega a próxima pergunta após 2 segundos
+            let todasPerguntas = ([] as Pergunta[]).concat(...this.paises.map(pais => pais.perguntas));
+            let perguntasRestantes = todasPerguntas.filter(pergunta => !this.perguntasFeitas.has(pergunta.texto));
+
+            if (perguntasRestantes.length === 0) {
+                setTimeout(() => {
+                    this.exibirFimDeJogo(true);
+                }, 3000); // Mantém a exibição por 3 segundos antes de mostrar a tela final
+            } else {
+                setTimeout(() => this.carregarNovaPergunta(), 2000); // Carrega a próxima pergunta após 2 segundos
+            }
         } else if (this.modoJogar === 'sobrevivencia') {
-            this.exibirFimDeJogo(); // Se errar no modo sobrevivência, termina o jogo
+            // No modo "sobrevivência", se errar, vai diretamente para a tela de fim de jogo
+            this.exibirFimDeJogo(false, "Você errou! Fim de jogo.");
         } else {
-            setTimeout(() => this.carregarNovaPergunta(), 2000); // No modo 'aprender', carrega a próxima pergunta após 2 segundos
+            // No modo "aprender", carrega a próxima pergunta após 2 segundos
+            setTimeout(() => this.carregarNovaPergunta(), 2000);
         }
     }
 
@@ -175,18 +189,20 @@ class JogoDeBandeiras {
         let fimDeJogoContainer = document.getElementById('fim-de-jogo');
         let mensagemFim = document.getElementById('mensagem-fim');
 
-        // Define a mensagem de fim de jogo
         if (fimDeJogoContainer && mensagemFim) {
-            mensagemFim.innerText = mensagemPersonalizada
-                ? mensagemPersonalizada
-                : jogoZerado
-                    ? "Parabéns! Você zerou o jogo, acabaram as perguntas."
-                    : "Você errou! Fim de jogo.";
+            // Adiciona o resumo de acertos e erros
+            let acertos = this.pontuacao;
+            let erros = this.perguntasFeitas.size - acertos;
+            mensagemFim.innerHTML = `
+                <p>${mensagemPersonalizada ? mensagemPersonalizada : jogoZerado ? "Parabéns! Você zerou o jogo, acabaram as perguntas." : "Você errou! Fim de jogo."}</p>
+                <p>${this.nomeJogador}, Acertos: ${acertos} | Erros: ${erros}</p>
+            `;
             fimDeJogoContainer.classList.remove('escondido');
         }
 
-        this.configurarBotoesFinais(); // Configura os botões para tentar novamente ou voltar ao menu
+        this.configurarBotoesFinais();
     }
+
 
     // Reinicia o jogo quando o jogador clica em "Tentar Novamente"
     tentarNovamente() {
