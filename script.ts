@@ -226,6 +226,15 @@ class JogoDeBandeiras {
         document.getElementById('menu')!.classList.remove('escondido');
     }
 
+    // Volta ao menu inicial quando o jogador clica em "Retornar ao Menu"
+    retornarAoHome() {
+        let fimDeJogoContainer = document.getElementById('fim-de-jogo');
+        if (fimDeJogoContainer) {
+            fimDeJogoContainer.classList.add('escondido');
+        }
+        document.getElementById('menu')!.classList.remove('escondido');
+    }
+
     // Embaralha um array usando o algoritmo de Fisher-Yates
     embaralharArray(array: any[]) {
         for (let i = array.length - 1; i > 0; i--) {
@@ -257,10 +266,12 @@ class JogoDeBandeiras {
     configurarBotoesFinais() {
         let botaoTentarNovamente = document.getElementById('botaoTentarNovamente');
         let botaoRetornarAoMenu = document.getElementById('botaoRetornarAoMenu');
+        let botaoRetornarAoHome = document.getElementById('botaoRetornarAoHome');
 
-        if (botaoTentarNovamente && botaoRetornarAoMenu) {
+        if (botaoTentarNovamente && botaoRetornarAoMenu && botaoRetornarAoHome) {
             botaoTentarNovamente.onclick = () => this.tentarNovamente(); // Reinicia o jogo
             botaoRetornarAoMenu.onclick = () => this.retornarAoMenu();   // Volta ao menu inicial
+            botaoRetornarAoHome.onclick = () => this.retornarAoHome();
         }
     }
 }

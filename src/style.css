@@ -119,7 +119,7 @@ button:hover {
 
 #botaoRetornarAoHome {
     position: fixed; /* Posição fixa na tela */
-    bottom: 20px; /* Distância da parte inferior */
+    bottom: 80px; /* Distância da parte inferior */
     right: 20px; /* Distância da parte direita */
 }
 

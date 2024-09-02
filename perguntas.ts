@@ -574,16 +574,5 @@ export let paises = [
                 "opcoes": ["Polônia", "Alemanha", "Hungria", "Romênia"]
             }
         ]
-    },
-    {
-        nome: "São Tomé e Príncipe",
-        urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/0/0a/Flag_of_S%C3%A3o_Tom%C3%A9_and_Pr%C3%ADncipe.svg",
-        perguntas: [
-            {
-                texto: "Qual país de língua portuguesa conta com uma população de cerca de 225.000 habitantes, foi colônia de Portugal entre 1470 até 1975?",
-                resposta: "São Tomé e Príncipe",
-                opcoes: ["Marrocos", "Tunísia", "São Tomé e Príncipe", "Egito"]
-            }
-        ]
-    }   
+    },  
 ];
