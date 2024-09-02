@@ -1,12 +1,19 @@
-// Lista de países com suas respectivas bandeiras e perguntas
+// Lista de países com suas respectivas perguntas, repostas, imagens das bandeiras e alternativas
+// Exporta uma variável chamada 'paises', tornando-a acessível em outros arquivos que importarem este módulo.
 export let paises = [
     {
-        nome: "Argentina",
+        // Primeiro objeto do array 'paises', representando um país.
+        nome: "Argentina", // Nome do país.
+        // URL da imagem da bandeira do país, usada para exibir a bandeira no jogo.
         urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg",
+        // Um array de perguntas relacionadas a este país.
         perguntas: [
             {
+                // Texto da pergunta apresentada ao jogador.
                 texto: "Qual país é conhecido por seu tango e pela cidade de Buenos Aires?",
+                // Resposta correta para a pergunta, usada para verificar se a resposta do jogador está correta.
                 resposta: "Argentina",
+                // Opções de resposta que o jogador pode escolher. Inclui a resposta correta e outras alternativas.
                 opcoes: ["Alemanha", "Angola", "Venezuela", "Argentina"]
             }
         ]
@@ -549,6 +556,16 @@ export let paises = [
                 "opcoes": ["Polônia", "Alemanha", "Hungria", "Romênia"]
             }
         ]
+    },
+    {
+        nome: "São Tomé e Príncipe",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/0/0a/Flag_of_S%C3%A3o_Tom%C3%A9_and_Pr%C3%ADncipe.svg",
+        perguntas: [
+            {
+                texto: "Qual país de língua portuguesa conta com uma população de cerca de 225.000 habitantes, foi colônia de Portugal entre 1470 até 1975?",
+                resposta: "São Tomé e Príncipe",
+                opcoes: ["Marrocos", "Tunísia", "São Tomé e Príncipe", "Egito"]
+            }
+        ]
     }
-    // ☝🏻 ACIMA TODAS AS PERGUNTAS ESTÃO COM AS IMAGENS DAS BANDEIRAS!!!
 ];

@@ -117,6 +117,12 @@ button:hover {
     right: 20px; /* Distância da parte direita */
 }
 
+#botaoRetornarAoHome {
+    position: fixed; /* Posição fixa na tela */
+    bottom: 20px; /* Distância da parte inferior */
+    right: 20px; /* Distância da parte direita */
+}
+
 /* Estilo para o cronômetro */
 #cronometro {
     color: #000000; /* Cor do texto preta */
