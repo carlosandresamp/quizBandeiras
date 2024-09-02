@@ -226,13 +226,20 @@ class JogoDeBandeiras {
         document.getElementById('menu')!.classList.remove('escondido');
     }
 
-    // Volta ao menu inicial quando o jogador clica em "Retornar ao Menu"
+    // Função para retornar ao menu principal quando o jogador clica em "Retornar ao Menu"
     retornarAoHome() {
         let fimDeJogoContainer = document.getElementById('fim-de-jogo');
         if (fimDeJogoContainer) {
             fimDeJogoContainer.classList.add('escondido');
         }
-        document.getElementById('menu')!.classList.remove('escondido');
+        let menuContainer = document.getElementById('menu');
+        if (menuContainer) {
+            menuContainer.classList.remove('escondido');
+        }
+        let jogoContainer = document.getElementById('jogo');
+        if (jogoContainer) {
+            jogoContainer.classList.add('escondido');
+        }
     }
 
     // Embaralha um array usando o algoritmo de Fisher-Yates
