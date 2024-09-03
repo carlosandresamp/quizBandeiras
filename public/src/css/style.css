@@ -9,7 +9,7 @@ body {
     justify-content: center; /* Centraliza horizontalmente o conteúdo */
     align-items: center; /* Centraliza verticalmente o conteúdo */
     height: 100vh; /* Define a altura como 100% da altura da viewport */
-    background-image: url(img/background.png); /* Adiciona uma imagem de fundo */
+    background-image: url(../img/background.png); /* Adiciona uma imagem de fundo */
     background-size: cover; /* A imagem de fundo cobre toda a área */
     background-position: center; /* Centraliza a posição da imagem de fundo */
 }
