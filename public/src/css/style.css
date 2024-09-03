@@ -136,43 +136,44 @@ button:hover {
 }
 
 #entrada-nome {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.8);
-    color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    z-index: 1000;
+    position: fixed; /* Mantém o elemento fixo na posição especificada, mesmo ao rolar a página */
+    top: 50%; /* Posiciona o elemento 50% a partir do topo da viewport */
+    left: 50%; /* Posiciona o elemento 50% a partir da esquerda da viewport */
+    transform: translate(-50%, -50%); /* Centraliza o elemento na tela ao ajustar a posição relativa a partir do seu próprio centro */
+    background-color: rgba(0, 0, 0, 0.8); /* Define uma cor de fundo preta com 80% de opacidade */
+    color: #fff; /* Define a cor do texto como branca */
+    padding: 20px; /* Adiciona um preenchimento interno de 20px ao redor do conteúdo do elemento */
+    border-radius: 10px; /* Arredonda os cantos do elemento com um raio de 10px */
+    text-align: center; /* Centraliza o texto dentro do elemento */
+    z-index: 1000; /* Define a posição do elemento em relação aos outros elementos, garantindo que ele fique na frente */
 }
 
 #entrada-nome label {
-    font-size: 1.2em;
-    margin-bottom: 10px;
-    display: block;
+    font-size: 1.2em; /* Define o tamanho da fonte para 1.2 vezes o tamanho padrão da fonte */
+    margin-bottom: 10px; /* Adiciona uma margem inferior de 10px abaixo do rótulo */
+    display: block; /* Faz com que o rótulo seja exibido como um bloco, ocupando toda a largura disponível */
 }
 
 #nome-jogador {
-    width: 80%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border-radius: 5px;
-    border: 2px solid #fff;
-    background-color: #333;
-    color: #fff;
+    width: 80%; /* Define a largura do campo de entrada como 80% do seu elemento pai */
+    padding: 10px; /* Adiciona um preenchimento interno de 10px dentro do campo de entrada */
+    margin-bottom: 15px; /* Adiciona uma margem inferior de 15px abaixo do campo de entrada */
+    border-radius: 5px; /* Arredonda os cantos do campo de entrada com um raio de 5px */
+    border: 2px solid #fff; /* Define uma borda de 2px de espessura com a cor branca */
+    background-color: #333; /* Define a cor de fundo do campo de entrada como cinza escuro */
+    color: #fff; /* Define a cor do texto dentro do campo de entrada como branca */
 }
 
 #confirmar-nome {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    padding: 10px 20px; /* Adiciona um preenchimento de 10px nas partes superior e inferior, e 20px nas laterais */
+    background-color: #4CAF50; /* Define a cor de fundo do botão como verde */
+    color: white; /* Define a cor do texto do botão como branca */
+    border: none; /* Remove qualquer borda padrão do botão */
+    border-radius: 5px; /* Arredonda os cantos do botão com um raio de 5px */
+    cursor: pointer; /* Altera o cursor para indicar que o botão é clicável */
 }
 
 #confirmar-nome:hover {
-    background-color: #45a049;
+    background-color: #45a049; /* Altera a cor de fundo do botão quando o mouse passa sobre ele, tornando-o um pouco mais escuro */
 }
+
