@@ -228,10 +228,6 @@ class JogoDeBandeiras {
 
     // Função para retornar ao menu principal quando o jogador clica em "Retornar ao Menu"
     retornarAoHome() {
-        let fimDeJogoContainer = document.getElementById('fim-de-jogo');
-        if (fimDeJogoContainer) {
-            fimDeJogoContainer.classList.add('escondido');
-        }
         let menuContainer = document.getElementById('menu');
         if (menuContainer) {
             menuContainer.classList.remove('escondido');

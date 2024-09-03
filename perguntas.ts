@@ -18,19 +18,19 @@ export let paises = [
     {
         // Primeiro objeto do array 'paises', representando um país.
         nome: "Argentina",  // Nome do país.
-        
+
         // URL da imagem da bandeira do país, usada para exibir a bandeira no jogo.
         urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg",
-        
+
         // Um array de perguntas relacionadas a este país.
         perguntas: [
             {
                 // Texto da pergunta apresentada ao jogador.
                 texto: "Qual país é conhecido por seu tango e pela cidade de Buenos Aires?",
-                
+
                 // Resposta correta para a pergunta, usada para verificar se a resposta do jogador está correta.
                 resposta: "Argentina",
-                
+
                 // Opções de resposta que o jogador pode escolher. Inclui a resposta correta e outras alternativas.
                 opcoes: ["Alemanha", "Angola", "Venezuela", "Argentina"]
             }
@@ -355,10 +355,10 @@ export let paises = [
             }
         ]
     },
-    {    
-        "nome": "Portugal",
-        "urlBandeira": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Flag_of_Portugal.svg/640px-Flag_of_Portugal.svg.png",
-        "perguntas": [
+    {
+        nome: "Portugal",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Flag_of_Portugal.svg/640px-Flag_of_Portugal.svg.png",
+        perguntas: [
             {
                 "texto": "Qual país europeu é famoso pelo vinho do Porto e pelo Algarve?",
                 "resposta": "Portugal",
@@ -367,9 +367,9 @@ export let paises = [
         ]
     },
     {
-        "nome": "Áustria",
-        "urlBandeira": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Flag_of_Austria.svg/640px-Flag_of_Austria.svg.png",
-        "perguntas": [
+        nome: "Áustria",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Flag_of_Austria.svg/640px-Flag_of_Austria.svg.png",
+        perguntas: [
             {
                 "texto": "Qual país é famoso por suas paisagens alpinas e por ser o berço de Mozart?",
                 "resposta": "Áustria",
@@ -378,9 +378,9 @@ export let paises = [
         ]
     },
     {
-        "nome": "Islândia",
-        "urlBandeira": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Flag_of_Iceland.svg/640px-Flag_of_Iceland.svg.png",
-        "perguntas": [
+        nome: "Islândia",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Flag_of_Iceland.svg/640px-Flag_of_Iceland.svg.png",
+        perguntas: [
             {
                 "texto": "Qual país é conhecido por suas paisagens vulcânicas, gêiseres e auroras boreais?",
                 "resposta": "Islândia",
@@ -389,9 +389,9 @@ export let paises = [
         ]
     },
     {
-        "nome": "Chile",
-        "urlBandeira": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Flag_of_Chile_%28Rectangular_canton_variant_1%29.svg/640px-Flag_of_Chile_%28Rectangular_canton_variant_1%29.svg.png",
-        "perguntas": [
+        nome: "Chile",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Flag_of_Chile_%28Rectangular_canton_variant_1%29.svg/640px-Flag_of_Chile_%28Rectangular_canton_variant_1%29.svg.png",
+        perguntas: [
             {
                 "texto": "Qual país sul-americano é famoso por sua longa e estreita extensão de terra?",
                 "resposta": "Chile",
@@ -400,9 +400,9 @@ export let paises = [
         ]
     },
     {
-        "nome": "Vietnã",
-        "urlBandeira": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Flag_of_North_Vietnam_%281955%E2%80%931976%29.svg/640px-Flag_of_North_Vietnam_%281955%E2%80%931976%29.svg.png",
-        "perguntas": [
+        nome: "Vietnã",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Flag_of_North_Vietnam_%281955%E2%80%931976%29.svg/640px-Flag_of_North_Vietnam_%281955%E2%80%931976%29.svg.png",
+        perguntas: [
             {
                 "texto": "Qual país é conhecido por suas paisagens exuberantes e a história da Guerra do Vietnã?",
                 "resposta": "Vietnã",
@@ -411,9 +411,9 @@ export let paises = [
         ]
     },
     {
-        "nome": "Irlanda",
-        "urlBandeira": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Flag_of_Ireland.svg/640px-Flag_of_Ireland.svg.png",
-        "perguntas": [
+        nome: "Irlanda",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Flag_of_Ireland.svg/640px-Flag_of_Ireland.svg.png",
+        perguntas: [
             {
                 "texto": "Qual país é famoso por suas paisagens verdes e tradição de música celta?",
                 "resposta": "Irlanda",
@@ -422,9 +422,9 @@ export let paises = [
         ]
     },
     {
-        "nome": "Colômbia",
-        "urlBandeira": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Colombia.svg/640px-Flag_of_Colombia.svg.png",
-        "perguntas": [
+        nome: "Colômbia",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Colombia.svg/640px-Flag_of_Colombia.svg.png",
+        perguntas: [
             {
                 "texto": "Qual país é conhecido por seu café e o carnaval de Barranquilla?",
                 "resposta": "Colômbia",
@@ -433,9 +433,9 @@ export let paises = [
         ]
     },
     {
-        "nome": "Indonésia",
-        "urlBandeira": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Flag_of_Indonesia.svg/640px-Flag_of_Indonesia.svg.png",
-        "perguntas": [
+        nome: "Indonésia",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Flag_of_Indonesia.svg/640px-Flag_of_Indonesia.svg.png",
+        perguntas: [
             {
                 "texto": "Qual país é o maior arquipélago do mundo e é conhecido pelos templos de Bali?",
                 "resposta": "Indonésia",
@@ -444,9 +444,9 @@ export let paises = [
         ]
     },
     {
-        "nome": "Cuba",
-        "urlBandeira": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Flag_of_Cuba.svg/640px-Flag_of_Cuba.svg.png",
-        "perguntas": [
+        nome: "Cuba",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Flag_of_Cuba.svg/640px-Flag_of_Cuba.svg.png",
+        perguntas: [
             {
                 "texto": "Qual país caribenho é conhecido por sua música salsa e a Revolução Cubana?",
                 "resposta": "Cuba",
@@ -455,9 +455,9 @@ export let paises = [
         ]
     },
     {
-        "nome": "Turquia",
-        "urlBandeira": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Flag_of_Turkey.svg/640px-Flag_of_Turkey.svg.png",
-        "perguntas": [
+        nome: "Turquia",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Flag_of_Turkey.svg/640px-Flag_of_Turkey.svg.png",
+        perguntas: [
             {
                 "texto": "Qual país é conhecido por sua história rica e o ponto turístico Hagia Sophia?",
                 "resposta": "Turquia",
@@ -466,9 +466,9 @@ export let paises = [
         ]
     },
     {
-        "nome": "Coreia do Sul",
-        "urlBandeira": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Flag_of_South_Korea_%281997%E2%80%932011%29.svg/640px-Flag_of_South_Korea_%281997%E2%80%932011%29.svg.png",
-        "perguntas": [
+        nome: "Coreia do Sul",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Flag_of_South_Korea_%281997%E2%80%932011%29.svg/640px-Flag_of_South_Korea_%281997%E2%80%932011%29.svg.png",
+        perguntas: [
             {
                 "texto": "Qual país é famoso por sua tecnologia avançada e cultura pop (K-pop)?",
                 "resposta": "Coreia do Sul",
@@ -477,9 +477,9 @@ export let paises = [
         ]
     },
     {
-        "nome": "Mongólia",
-        "urlBandeira": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Flag_of_Mongolia_%281992%E2%80%932011%29.svg/640px-Flag_of_Mongolia_%281992%E2%80%932011%29.svg.png",
-        "perguntas": [
+        nome: "Mongólia",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Flag_of_Mongolia_%281992%E2%80%932011%29.svg/640px-Flag_of_Mongolia_%281992%E2%80%932011%29.svg.png",
+        perguntas: [
             {
                 "texto": "Qual país é conhecido por suas vastas estepes e a história de Genghis Khan?",
                 "resposta": "Mongólia",
@@ -488,9 +488,9 @@ export let paises = [
         ]
     },
     {
-        "nome": "Quênia",
-        "urlBandeira": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Flag_of_Kenya.svg/640px-Flag_of_Kenya.svg.png",
-        "perguntas": [
+        nome: "Quênia",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Flag_of_Kenya.svg/640px-Flag_of_Kenya.svg.png",
+        perguntas: [
             {
                 "texto": "Qual país africano é famoso por suas vastas savanas e pelo Parque Nacional de Amboseli?",
                 "resposta": "Quênia",
@@ -499,9 +499,9 @@ export let paises = [
         ]
     },
     {
-        "nome": "Peru",
-        "urlBandeira": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Flag_of_Peru_%28state%29.svg/640px-Flag_of_Peru_%28state%29.svg.png",
-        "perguntas": [
+        nome: "Peru",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Flag_of_Peru_%28state%29.svg/640px-Flag_of_Peru_%28state%29.svg.png",
+        perguntas: [
             {
                 "texto": "Qual país andino é lar da antiga cidade de Machu Picchu?",
                 "resposta": "Peru",
@@ -510,9 +510,9 @@ export let paises = [
         ]
     },
     {
-        "nome": "Nova Zelândia",
-        "urlBandeira": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Flag_of_New_Zealand.svg/640px-Flag_of_New_Zealand.svg.png",
-        "perguntas": [
+        nome: "Nova Zelândia",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Flag_of_New_Zealand.svg/640px-Flag_of_New_Zealand.svg.png",
+        perguntas: [
             {
                 "texto": "Qual país é conhecido por suas paisagens deslumbrantes e foi cenário de 'O Senhor dos Anéis'?",
                 "resposta": "Nova Zelândia",
@@ -521,9 +521,9 @@ export let paises = [
         ]
     },
     {
-        "nome": "Finlândia",
-        "urlBandeira": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Flag_of_Finland.svg/640px-Flag_of_Finland.svg.png",
-        "perguntas": [
+        nome: "Finlândia",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Flag_of_Finland.svg/640px-Flag_of_Finland.svg.png",
+        perguntas: [
             {
                 "texto": "Qual país é conhecido como 'A Terra dos Mil Lagos' e pelo maior consumo de café per capita?",
                 "resposta": "Finlândia",
@@ -532,9 +532,9 @@ export let paises = [
         ]
     },
     {
-        "nome": "Etiópia",
-        "urlBandeira": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Flag_of_Ethiopia.svg/640px-Flag_of_Ethiopia.svg.png",
-        "perguntas": [
+        nome: "Etiópia",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Flag_of_Ethiopia.svg/640px-Flag_of_Ethiopia.svg.png",
+        perguntas: [
             {
                 "texto": "Qual país africano é conhecido como o berço da humanidade e onde foi encontrado o fóssil de 'Lucy'?",
                 "resposta": "Etiópia",
@@ -543,9 +543,9 @@ export let paises = [
         ]
     },
     {
-        "nome": "Tailândia",
-        "urlBandeira": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Flag_of_Thailand_%28proposed_shade_of_colours%29.svg/640px-Flag_of_Thailand_%28proposed_shade_of_colours%29.svg.png",
-        "perguntas": [
+        nome: "Tailândia",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Flag_of_Thailand_%28proposed_shade_of_colours%29.svg/640px-Flag_of_Thailand_%28proposed_shade_of_colours%29.svg.png",
+        perguntas: [
             {
                 "texto": "Qual país é famoso por suas praias exóticas, templos budistas e a culinária vibrante?",
                 "resposta": "Tailândia",
@@ -554,9 +554,9 @@ export let paises = [
         ]
     },
     {
-        "nome": "Suíça",
-        "urlBandeira": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Flag_of_Switzerland.svg/640px-Flag_of_Switzerland.svg.png",
-        "perguntas": [
+        nome: "Suíça",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Flag_of_Switzerland.svg/640px-Flag_of_Switzerland.svg.png",
+        perguntas: [
             {
                 "texto": "Qual país é conhecido por seus alpes, neutralidade política e chocolates famosos?",
                 "resposta": "Suíça",
@@ -565,14 +565,14 @@ export let paises = [
         ]
     },
     {
-        "nome": "Polônia",
-        "urlBandeira": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Flag_of_Poland.svg/640px-Flag_of_Poland.svg.png",
-        "perguntas": [
+        nome: "Polônia",
+        urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Flag_of_Poland.svg/640px-Flag_of_Poland.svg.png",
+        perguntas: [
             {
                 "texto": "Qual país é conhecido pela cidade histórica de Cracóvia e o campo de concentração de Auschwitz?",
                 "resposta": "Polônia",
                 "opcoes": ["Polônia", "Alemanha", "Hungria", "Romênia"]
             }
         ]
-    },  
+    },
 ];
