@@ -1,72 +1,113 @@
 /* Estilo base para o corpo da página */
 body {
-    font-family: Arial, sans-serif; /* Define a fonte principal */
-    text-align: center; /* Centraliza o texto */
-    background-color: rgb(179, 179, 179); /* Cor de fundo cinza claro */
-    margin: 0; /* Remove margens padrão */
-    padding: 20px; /* Adiciona preenchimento ao redor do conteúdo */
-    display: flex; /* Define um layout flexível para centralização */
-    justify-content: center; /* Centraliza horizontalmente o conteúdo */
-    align-items: center; /* Centraliza verticalmente o conteúdo */
-    height: 100vh; /* Define a altura como 100% da altura da viewport */
-    background-image: url(../img/background.png); /* Adiciona uma imagem de fundo */
-    background-size: cover; /* A imagem de fundo cobre toda a área */
-    background-position: center; /* Centraliza a posição da imagem de fundo */
+    font-family: Arial, sans-serif;
+    /* Define a fonte principal */
+    text-align: center;
+    /* Centraliza o texto */
+    background-color: rgb(179, 179, 179);
+    /* Cor de fundo cinza claro */
+    margin: 0;
+    /* Remove margens padrão */
+    padding: 20px;
+    /* Adiciona preenchimento ao redor do conteúdo */
+    display: flex;
+    /* Define um layout flexível para centralização */
+    justify-content: center;
+    /* Centraliza horizontalmente o conteúdo */
+    align-items: center;
+    /* Centraliza verticalmente o conteúdo */
+    height: 100vh;
+    /* Define a altura como 100% da altura da viewport */
+    background-image: url(../img/background.png);
+    /* Adiciona uma imagem de fundo */
+    background-size: cover;
+    /* A imagem de fundo cobre toda a área */
+    background-position: center;
+    /* Centraliza a posição da imagem de fundo */
 }
 
 /* Estilo para o container principal do quiz */
 .container-estilizada {
-    background-color: white; /* Fundo branco */
-    border-radius: 15px; /* Bordas arredondadas */
-    padding: 20px; /* Preenchimento interno */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra ao redor do container */
-    width: 100%; /* Largura total do container */
-    max-width: 600px; /* Define a largura máxima para manter o design responsivo */
-    text-align: center; /* Centraliza o texto dentro do container */
+    background-color: white;
+    /* Fundo branco */
+    border-radius: 15px;
+    /* Bordas arredondadas */
+    padding: 20px;
+    /* Preenchimento interno */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Sombra ao redor do container */
+    width: 100%;
+    /* Largura total do container */
+    max-width: 600px;
+    /* Define a largura máxima para manter o design responsivo */
+    text-align: center;
+    /* Centraliza o texto dentro do container */
 }
 
 /* Classe para esconder elementos */
 .escondido {
-    display: none; /* Esconde o elemento da visualização */
+    display: none;
+    /* Esconde o elemento da visualização */
 }
 
 /* Estilo base para botões */
 button {
-    padding: 10px 20px; /* Espaçamento interno */
-    font-size: 16px; /* Tamanho da fonte */
-    cursor: pointer; /* Cursor de mão ao passar sobre o botão */
-    border-radius: 5mm; /* Bordas arredondadas */
-    background-color: red; /* Cor de fundo vermelha */
-    color: white; /* Cor do texto branca */
-    border: none; /* Remove a borda padrão */
-    transition: background-color 0.3s, transform 0.3s; /* Transições suaves para cor de fundo e escala */
+    padding: 10px 20px;
+    /* Espaçamento interno */
+    font-size: 16px;
+    /* Tamanho da fonte */
+    cursor: pointer;
+    /* Cursor de mão ao passar sobre o botão */
+    border-radius: 5mm;
+    /* Bordas arredondadas */
+    background-color: red;
+    /* Cor de fundo vermelha */
+    color: white;
+    /* Cor do texto branca */
+    border: none;
+    /* Remove a borda padrão */
+    transition: background-color 0.3s, transform 0.3s;
+    /* Transições suaves para cor de fundo e escala */
 }
 
 /* Estilo para o estado de 'hover' dos botões */
 button:hover {
-    background-color: darkred; /* Cor de fundo ao passar o mouse */
-    transform: scale(1.05); /* Aumenta ligeiramente o botão */
+    background-color: darkred;
+    /* Cor de fundo ao passar o mouse */
+    transform: scale(1.05);
+    /* Aumenta ligeiramente o botão */
 }
 
 /* Estilo para títulos e subtítulos */
-#menu h1, #fim-de-jogo h2 {
-    margin-bottom: 40px; /* Espaçamento abaixo do título */
-    color: black; /* Cor do texto preta */
+#menu h1,
+#fim-de-jogo h2 {
+    margin-bottom: 40px;
+    /* Espaçamento abaixo do título */
+    color: black;
+    /* Cor do texto preta */
 }
 
 /* Estilo para botões nos menus e na tela de fim de jogo */
-#menu button, #fim-de-jogo button {
-    margin-bottom: 20px; /* Espaçamento abaixo do botão */
-    width: 200px; /* Largura fixa dos botões */
-    display: block; /* Exibe cada botão em uma nova linha */
-    margin-left: auto; /* Centraliza o botão horizontalmente */
-    margin-right: auto; /* Centraliza o botão horizontalmente */
-    justify-content: center; /* Centraliza o conteúdo do botão */
+#menu button,
+#fim-de-jogo button {
+    margin-bottom: 20px;
+    /* Espaçamento abaixo do botão */
+    width: 200px;
+    /* Largura fixa dos botões */
+    display: block;
+    /* Exibe cada botão em uma nova linha */
+    margin-left: auto;
+    /* Centraliza o botão horizontalmente */
+    margin-right: auto;
+    /* Centraliza o botão horizontalmente */
+    justify-content: center;
+    /* Centraliza o conteúdo do botão */
 }
 
 /* Estilo para a pontuação */
 #pontuacao {
-    color: black; /* Cor do texto preta */
+    color: black;
+    /* Cor do texto preta */
 }
 
 /* Margem ao redor do container de bandeiras */
@@ -76,104 +117,168 @@ button:hover {
 
 /* Estilo para o container de opções */
 #container-opcoes {
-    display: flex; /* Layout flexível para organizar as opções */
-    flex-direction: column; /* Alinha os itens em uma coluna */
-    align-items: center; /* Centraliza os itens horizontalmente */
-    gap: 10px; /* Espaçamento entre as opções */
+    display: flex;
+    /* Layout flexível para organizar as opções */
+    flex-direction: column;
+    /* Alinha os itens em uma coluna */
+    align-items: center;
+    /* Centraliza os itens horizontalmente */
+    gap: 10px;
+    /* Espaçamento entre as opções */
 }
 
 /* Estilo para os botões de opções */
 #container-opcoes button {
-    width: 70%; /* Largura dos botões de opções */
-    padding: 10px 20px; /* Espaçamento interno */
-    font-size: 16px; /* Tamanho da fonte */
-    cursor: pointer; /* Cursor de mão ao passar sobre o botão */
+    width: 70%;
+    /* Largura dos botões de opções */
+    padding: 10px 20px;
+    /* Espaçamento interno */
+    font-size: 16px;
+    /* Tamanho da fonte */
+    cursor: pointer;
+    /* Cursor de mão ao passar sobre o botão */
 }
 
 /* Estilo para o container de perguntas */
 #container-pergunta h3 {
-    color: black; /* Cor do texto preta */
+    color: black;
+    /* Cor do texto preta */
 }
 
 /* Estilo para o título dentro do container de bandeiras */
 #container-bandeira h2 {
-    color: black; /* Cor do texto preta */
-    font-size: 24px; /* Tamanho da fonte */
-    margin-bottom: 20px; /* Espaçamento abaixo do título */
+    color: black;
+    /* Cor do texto preta */
+    font-size: 24px;
+    /* Tamanho da fonte */
+    margin-bottom: 20px;
+    /* Espaçamento abaixo do título */
 }
 
 /* Estilo para a imagem da bandeira */
 .bandeira {
-    width: 250px; /* Largura da bandeira */
-    height: auto; /* Altura ajustada proporcionalmente */
-    border-radius: 5mm; /* Bordas arredondadas */
-    border: 2px solid rgb(0, 0, 0); /* Borda preta ao redor da bandeira */
+    width: 250px;
+    /* Largura da bandeira */
+    height: auto;
+    /* Altura ajustada proporcionalmente */
+    border-radius: 5mm;
+    /* Bordas arredondadas */
+    border: 2px solid rgb(0, 0, 0);
+    /* Borda preta ao redor da bandeira */
 }
 
 /* Estilo para o botão de som */
 #toggle-som {
-    position: fixed; /* Posição fixa na tela */
-    bottom: 20px; /* Distância da parte inferior */
-    right: 20px; /* Distância da parte direita */
+    position: fixed;
+    /* Posição fixa na tela */
+    bottom: 20px;
+    /* Distância da parte inferior */
+    right: 20px;
+    /* Distância da parte direita */
 }
 
 #botaoRetornarAoHome {
-    position: fixed; /* Posição fixa na tela */
-    bottom: 80px; /* Distância da parte inferior */
-    right: 20px; /* Distância da parte direita */
+    position: fixed;
+    /* Posição fixa na tela */
+    bottom: 80px;
+    /* Distância da parte inferior */
+    right: 20px;
+    /* Distância da parte direita */
 }
 
 /* Estilo para o cronômetro */
 #cronometro {
-    color: #000000; /* Cor do texto preta */
-    margin: 25px; /* Espaçamento ao redor */
+    color: #000000;
+    /* Cor do texto preta */
+    margin: 25px;
+    /* Espaçamento ao redor */
 }
 
 /* Estilo para a opção correta */
 .correta {
-    background-color: green; /* Cor de fundo verde */
-    color: white; /* Cor do texto branca */
+    background-color: green;
+    /* Cor de fundo verde */
+    color: white;
+    /* Cor do texto branca */
 }
 
 #entrada-nome {
-    position: fixed; /* Mantém o elemento fixo na posição especificada, mesmo ao rolar a página */
-    top: 50%; /* Posiciona o elemento 50% a partir do topo da viewport */
-    left: 50%; /* Posiciona o elemento 50% a partir da esquerda da viewport */
-    transform: translate(-50%, -50%); /* Centraliza o elemento na tela ao ajustar a posição relativa a partir do seu próprio centro */
-    background-color: rgba(0, 0, 0, 0.8); /* Define uma cor de fundo preta com 80% de opacidade */
-    color: #fff; /* Define a cor do texto como branca */
-    padding: 20px; /* Adiciona um preenchimento interno de 20px ao redor do conteúdo do elemento */
-    border-radius: 10px; /* Arredonda os cantos do elemento com um raio de 10px */
-    text-align: center; /* Centraliza o texto dentro do elemento */
-    z-index: 1000; /* Define a posição do elemento em relação aos outros elementos, garantindo que ele fique na frente */
+    position: fixed;
+    /* Mantém o elemento fixo na posição especificada, mesmo ao rolar a página */
+    top: 50%;
+    /* Posiciona o elemento 50% a partir do topo da viewport */
+    left: 50%;
+    /* Posiciona o elemento 50% a partir da esquerda da viewport */
+    transform: translate(-50%, -50%);
+    /* Centraliza o elemento na tela ao ajustar a posição relativa a partir do seu próprio centro */
+    background-color: rgba(0, 0, 0, 0.8);
+    /* Define uma cor de fundo preta com 80% de opacidade */
+    color: #fff;
+    /* Define a cor do texto como branca */
+    padding: 20px;
+    /* Adiciona um preenchimento interno de 20px ao redor do conteúdo do elemento */
+    border-radius: 10px;
+    /* Arredonda os cantos do elemento com um raio de 10px */
+    text-align: center;
+    /* Centraliza o texto dentro do elemento */
+    z-index: 1000;
+    /* Define a posição do elemento em relação aos outros elementos, garantindo que ele fique na frente */
 }
 
 #entrada-nome label {
-    font-size: 1.2em; /* Define o tamanho da fonte para 1.2 vezes o tamanho padrão da fonte */
-    margin-bottom: 10px; /* Adiciona uma margem inferior de 10px abaixo do rótulo */
-    display: block; /* Faz com que o rótulo seja exibido como um bloco, ocupando toda a largura disponível */
+    font-size: 1.2em;
+    /* Define o tamanho da fonte para 1.2 vezes o tamanho padrão da fonte */
+    margin-bottom: 10px;
+    /* Adiciona uma margem inferior de 10px abaixo do rótulo */
+    display: block;
+    /* Faz com que o rótulo seja exibido como um bloco, ocupando toda a largura disponível */
 }
 
 #nome-jogador {
-    width: 80%; /* Define a largura do campo de entrada como 80% do seu elemento pai */
-    padding: 10px; /* Adiciona um preenchimento interno de 10px dentro do campo de entrada */
-    margin-bottom: 15px; /* Adiciona uma margem inferior de 15px abaixo do campo de entrada */
-    border-radius: 5px; /* Arredonda os cantos do campo de entrada com um raio de 5px */
-    border: 2px solid #fff; /* Define uma borda de 2px de espessura com a cor branca */
-    background-color: #333; /* Define a cor de fundo do campo de entrada como cinza escuro */
-    color: #fff; /* Define a cor do texto dentro do campo de entrada como branca */
+    width: 80%;
+    /* Define a largura do campo de entrada como 80% do seu elemento pai */
+    padding: 10px;
+    /* Adiciona um preenchimento interno de 10px dentro do campo de entrada */
+    margin-bottom: 15px;
+    /* Adiciona uma margem inferior de 15px abaixo do campo de entrada */
+    border-radius: 5px;
+    /* Arredonda os cantos do campo de entrada com um raio de 5px */
+    border: 2px solid #fff;
+    /* Define uma borda de 2px de espessura com a cor branca */
+    background-color: #333;
+    /* Define a cor de fundo do campo de entrada como cinza escuro */
+    color: #fff;
+    /* Define a cor do texto dentro do campo de entrada como branca */
 }
 
 #confirmar-nome {
-    padding: 10px 20px; /* Adiciona um preenchimento de 10px nas partes superior e inferior, e 20px nas laterais */
-    background-color: #4CAF50; /* Define a cor de fundo do botão como verde */
-    color: white; /* Define a cor do texto do botão como branca */
-    border: none; /* Remove qualquer borda padrão do botão */
-    border-radius: 5px; /* Arredonda os cantos do botão com um raio de 5px */
-    cursor: pointer; /* Altera o cursor para indicar que o botão é clicável */
+    padding: 10px 20px;
+    /* Adiciona um preenchimento de 10px nas partes superior e inferior, e 20px nas laterais */
+    background-color: #4CAF50;
+    /* Define a cor de fundo do botão como verde */
+    color: white;
+    /* Define a cor do texto do botão como branca */
+    border: none;
+    /* Remove qualquer borda padrão do botão */
+    border-radius: 5px;
+    /* Arredonda os cantos do botão com um raio de 5px */
+    cursor: pointer;
+    /* Altera o cursor para indicar que o botão é clicável */
 }
 
 #confirmar-nome:hover {
-    background-color: #45a049; /* Altera a cor de fundo do botão quando o mouse passa sobre ele, tornando-o um pouco mais escuro */
+    background-color: #45a049;
+    /* Altera a cor de fundo do botão quando o mouse passa sobre ele, tornando-o um pouco mais escuro */
+}
+
+
+#nomeInput {
+    width: 80%;
+    padding: 10px;
+    font-size: 16px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
 }
 
