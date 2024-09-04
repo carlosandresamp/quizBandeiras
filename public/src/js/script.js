@@ -15,7 +15,7 @@ class JogoDeBandeiras {
         this.perguntasFeitas = new Set(); // Inicializa o conjunto de perguntas feitas
         this.configurarBotoesIniciais(); // Configura os botões iniciais do jogo
         this.configurarBotaoSom(); // Configura o botão de controle do som
-        this.configurarBotoesFinais(); // Configura os botões para o final do jogo
+        this.configurarBotoes(); // Configura os botões para o final do jogo
     }
     // Configura os botões de seleção do modo de jogo na interface
     configurarBotoesIniciais() {
@@ -95,11 +95,18 @@ class JogoDeBandeiras {
         }
         // Define o cronômetro para diminuir o tempo a cada segundo
         this.cronometro = setInterval(() => {
+            // Decrementa o tempo restante
             this.tempoRestante--;
+            // Atualiza a interface com o tempo restante
             cronometroElemento.innerText = `Tempo restante: ${this.tempoRestante}s`;
-            // Quando o tempo acabar, verificar o modo de jogo e proceder adequadamente
+            // Verifica se o tempo acabou
             if (this.tempoRestante <= 0) {
-                clearInterval(this.cronometro);
+                // Garante que o cronômetro seja parado
+                if (this.cronometro !== null) {
+                    clearInterval(this.cronometro);
+                    this.cronometro = null;
+                }
+                // Lógica do modo de jogo após o tempo acabar
                 if (this.modoJogar === 'sobrevivencia') {
                     this.exibirFimDeJogo(false, "O tempo acabou! Fim de jogo.");
                 }
@@ -170,7 +177,7 @@ class JogoDeBandeiras {
             `;
             fimDeJogoContainer.classList.remove('escondido');
         }
-        this.configurarBotoesFinais();
+        this.configurarBotoes();
     }
     // Reinicia o jogo quando o jogador clica em "Tentar Novamente"
     tentarNovamente() {
@@ -192,15 +199,28 @@ class JogoDeBandeiras {
         }
         document.getElementById('menu').classList.remove('escondido');
     }
-    // Função para retornar ao menu principal quando o jogador clica em "Retornar ao Menu"
+    // Função para retornar ao menu principal quando o jogador clica em "🏠"
     retornarAoHome() {
-        let menuContainer = document.getElementById('menu');
-        if (menuContainer) {
-            menuContainer.classList.remove('escondido');
+        // Para o cronômetro, se estiver ativo
+        if (this.cronometro) {
+            clearInterval(this.cronometro);
+            this.cronometro = null;
         }
-        let jogoContainer = document.getElementById('jogo');
-        if (jogoContainer) {
-            jogoContainer.classList.add('escondido');
+        // Esconde todas as seções do jogo
+        document.getElementById('jogo').classList.add('escondido');
+        document.getElementById('fim-de-jogo').classList.add('escondido');
+        // Mostra o menu inicial
+        document.getElementById('menu').classList.remove('escondido');
+    }
+    // Configura os botões para o final do jogo
+    configurarBotoes() {
+        let botaoTentarNovamente = document.getElementById('botaoTentarNovamente');
+        let botaoRetornarAoMenu = document.getElementById('botaoRetornarAoMenu');
+        let botaoRetornarAoHome = document.getElementById('botaoRetornarAoHome');
+        if (botaoTentarNovamente && botaoRetornarAoMenu && botaoRetornarAoHome) {
+            botaoTentarNovamente.onclick = () => this.tentarNovamente(); // Reinicia o jogo
+            botaoRetornarAoMenu.onclick = () => this.retornarAoMenu(); // Volta ao menu inicial depois de perder ou ganhar o quiz
+            botaoRetornarAoHome.onclick = () => this.retornarAoHome(); // Volta ao menu inicial de onde estiver quando o jogador clica em "🏠"
         }
     }
     // Embaralha um array usando o algoritmo de Fisher-Yates
@@ -227,17 +247,6 @@ class JogoDeBandeiras {
             }
             somAtivado = !somAtivado; // Alterna o estado do som
         });
-    }
-    // Configura os botões para o final do jogo
-    configurarBotoesFinais() {
-        let botaoTentarNovamente = document.getElementById('botaoTentarNovamente');
-        let botaoRetornarAoMenu = document.getElementById('botaoRetornarAoMenu');
-        let botaoRetornarAoHome = document.getElementById('botaoRetornarAoHome');
-        if (botaoTentarNovamente && botaoRetornarAoMenu && botaoRetornarAoHome) {
-            botaoTentarNovamente.onclick = () => this.tentarNovamente(); // Reinicia o jogo
-            botaoRetornarAoMenu.onclick = () => this.retornarAoMenu(); // Volta ao menu inicial
-            botaoRetornarAoHome.onclick = () => this.retornarAoHome();
-        }
     }
 }
 // Cria uma nova instância do jogo, passando a lista de países como parâmetro

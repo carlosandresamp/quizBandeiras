@@ -386,9 +386,9 @@ export let paises = [
         urlBandeira: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Flag_of_North_Vietnam_%281955%E2%80%931976%29.svg/640px-Flag_of_North_Vietnam_%281955%E2%80%931976%29.svg.png",
         perguntas: [
             {
-                "texto": "Qual país é conhecido por suas paisagens exuberantes e a história da Guerra do Vietnã?",
+                "texto": "Qual país é conhecido por suas paisagens exuberantes e histórias de Guerra retratadas em diversos filmes?",
                 "resposta": "Vietnã",
-                "opcoes": ["Vietnã", "Tailândia", "Laos", "Camboja"]
+                "opcoes": ["Tailândia", "Vietnã", "Laos", "Camboja"]
             }
         ]
     },
