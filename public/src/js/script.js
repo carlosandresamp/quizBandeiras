@@ -24,7 +24,8 @@ class JogoDeBandeiras {
     }
     // Inicia o jogo no modo selecionado
     iniciarJogo(jogar) {
-        this.nomeJogador = prompt('Digite seu nome de jogador:', '') || 'Jogador';
+        let nomeInput = document.getElementById('nome-jogador-input');
+        this.nomeJogador = nomeInput.value || 'Jogador'; // Se o nome estiver vazio, define como "Jogador"
         this.pontuacao = 0; // Reseta a pontuação
         this.modoJogar = jogar; // Define o modo de jogo
         this.perguntasFeitas.clear(); // Limpa as perguntas feitas
