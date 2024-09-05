@@ -9,7 +9,7 @@ body {
     justify-content: center; /* Centraliza horizontalmente o conteúdo */
     align-items: center; /* Centraliza verticalmente o conteúdo */
     height: 100vh; /* Define a altura como 100% da altura da viewport */
-    background-image: url(../img/bandeiras_background.gif); /* Adiciona uma imagem de fundo */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../img/bandeiras_background.gif); /* Adiciona uma imagem de fundo e a escurece*/
     background-size: cover; /* A imagem de fundo cobre toda a área */
     background-position: center; /* Centraliza a posição da imagem de fundo */
 }
@@ -135,12 +135,13 @@ button:hover {
     color: white; /* Cor do texto branca */
 }
 
+/* Estilo para a barra de digitar o nome do jogador */
 .input-nome-jogador {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    font-size: 16px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
+    width: 100%;           /* Define a largura do input para 100% do seu elemento pai */
+    padding: 10px;          /* Adiciona espaçamento interno (padding) de 10px ao redor do conteúdo do input */
+    margin: 10px 0;         /* Adiciona uma margem de 10px acima e abaixo do input */
+    font-size: 16px;        /* Define o tamanho da fonte do texto dentro do input */
+    border-radius: 5px;     /* Arredonda os cantos do input com um raio de 5px */
+    border: 1px solid #ccc; /* Define uma borda de 1px com cor cinza claro (#ccc) ao redor do input */
+    box-sizing: border-box; /* Faz com que o padding e a borda sejam incluídos na largura total do input */
 }
