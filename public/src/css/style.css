@@ -10,7 +10,7 @@ body {
     align-items: center; /* Centraliza verticalmente o conteúdo */
     height: 100vh; /* Define a altura como 100% da altura da viewport */
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../img/bandeiras_background.gif); /* Adiciona uma imagem de fundo e a escurece*/
-    background-size: cover; /* A imagem de fundo cobre toda a área */
+    background-size: contain; /* A imagem de fundo cobre toda a área */
     background-position: center; /* Centraliza a posição da imagem de fundo */
 }
 
