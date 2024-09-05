@@ -21,16 +21,10 @@ class JogoDeBandeiras {
     configurarBotoesIniciais() {
         document.getElementById('botaoSobrevivencia').onclick = () => this.iniciarJogo('sobrevivencia');
         document.getElementById('botaoAprender').onclick = () => this.iniciarJogo('aprender');
-        document.getElementById('botaoEnviar').onclick = () => this.capturarNomeJogador();
-    }
-    capturarNomeJogador() {
-        const inputNome = document.getElementById('nomeInput');
-        this.nomeJogador = inputNome.value || 'Jogador'; // Armazena o nome ou usa 'Jogador' como padrão
-        inputNome.value = '';
     }
     // Inicia o jogo no modo selecionado
     iniciarJogo(jogar) {
-        this.capturarNomeJogador(); //Puxa o nome do jogador que foi armazenado
+        this.nomeJogador = prompt('Digite seu nome de jogador:', '') || 'Jogador';
         this.pontuacao = 0; // Reseta a pontuação
         this.modoJogar = jogar; // Define o modo de jogo
         this.perguntasFeitas.clear(); // Limpa as perguntas feitas
