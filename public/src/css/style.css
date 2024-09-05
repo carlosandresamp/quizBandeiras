@@ -9,7 +9,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-image: url(img/background.png);
+    background-image: url(../img/background.png);
     background-size: cover;
     background-position: center;
 }
@@ -102,5 +102,11 @@ button:hover {
 #toggle-som {
     position: fixed;
     bottom: 20px;
+    right: 20px;
+}
+
+#botaoRetornarAoHome{
+    position: fixed;
+    bottom: 75px;
     right: 20px;
 }
