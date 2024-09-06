@@ -20,20 +20,20 @@ class JogoDeBandeiras {
         this.pontuacao = 0;                  // Inicializa a pontuação com zero
         this.modoJogar = 'sobrevivencia';    // Define o modo padrão de jogo como sobrevivência
         this.perguntasFeitas = new Set();    // Inicializa o conjunto de perguntas feitas
-        this.configurarBotoesIniciais();     // Configura os botões iniciais do jogo
+        this.configurarBotoesModos();     // Configura os botões iniciais de modo de jogo
         this.configurarBotaoSom();           // Configura o botão de controle do som
         this.configurarBotoes();       // Configura os botões para o final do jogo
     }
 
     // Configura os botões de seleção do modo de jogo na interface
-    configurarBotoesIniciais() {
+    configurarBotoesModos() {
         document.getElementById('botaoSobrevivencia')!.onclick = () => this.iniciarJogo('sobrevivencia');
         document.getElementById('botaoAprender')!.onclick = () => this.iniciarJogo('aprender');
     }
 
     // Inicia o jogo no modo selecionado
     iniciarJogo(jogar: 'sobrevivencia' | 'aprender') {
-        let nomeInput = document.getElementById('nome-jogador-input') as HTMLInputElement;
+        let nomeInput = document.getElementById('nome-jogador-input') as HTMLInputElement; // Busca o campo de texto com o id 'nome-jogador-input' e trata como um input de HTML
         this.nomeJogador = nomeInput.value || 'Jogador';  // Se o nome estiver vazio, define como "Jogador"
         this.pontuacao = 0;                     // Reseta a pontuação
         this.modoJogar = jogar;                 // Define o modo de jogo
