@@ -49,8 +49,6 @@ A cada pergunta, uma bandeira será exibida, e você terá que escolher o país 
 
 Agradecimentos aos desenvolvedores que contribuíram para este projeto:
 
-
-- **Carlos** - _Colaborador_
 - **Cicero** - _Colaborador_
 - **Pedro** - _Colaborador_
 
