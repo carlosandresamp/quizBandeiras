@@ -44,3 +44,20 @@ A cada pergunta, uma bandeira será exibida, e você terá que escolher o país 
    - **Botões de Ação**: "Jogar Novamente" ou "Retornar ao Menu" para que você possa continuar a diversão!
 
 ---
+
+## 👨‍💻 Desenvolvedores
+
+Agradecimentos aos desenvolvedores que contribuíram para este projeto:
+
+
+- **Carlos** - _Colaborador_
+- **Cicero** - _Colaborador_
+- **Pedro** - _Colaborador_
+
+📢 Se você deseja contribuir, fique à vontade para abrir uma **issue** ou enviar um **pull request**!
+
+---
+
+💡 _Divirta-se jogando e desenvolvendo!_ 🎉
+
+---
